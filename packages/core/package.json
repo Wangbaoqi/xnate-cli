@@ -1,0 +1,22 @@
+{
+  "name": "@xnate-cli/core",
+  "version": "1.0.0",
+  "description": "xnate-cli core",
+  "author": "Wangbaoqi <wangbaoqi8839@gmail.com>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "lib/core.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "echo \"run tests from core\""
+  },
+  "dependencies": {
+    "@xnate-cli/utils": "^1.0.0"
+  }
+}
