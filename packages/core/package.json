@@ -1,6 +1,6 @@
 {
   "name": "@xnate-cli/core",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "xnate-cli core",
   "author": "Wangbaoqi <wangbaoqi8839@gmail.com>",
   "homepage": "",
@@ -17,7 +17,7 @@
     "test": "echo \"run tests from core\""
   },
   "dependencies": {
-    "@xnate-cli/utils": "^1.0.1"
+    "@xnate-cli/utils": "^1.0.2"
   },
   "gitHead": "359c11a314b9e1b2cdf311922ce8566ec80396c9"
 }
