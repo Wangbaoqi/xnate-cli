@@ -10,6 +10,9 @@
     "lib": "lib",
     "test": "__tests__"
   },
+  "bin": {
+    "xnate-cli": "bin/index.js"
+  },
   "files": [
     "lib"
   ],
@@ -19,5 +22,5 @@
   "dependencies": {
     "@xnate-cli/utils": "^1.0.2"
   },
-  "gitHead": "359c11a314b9e1b2cdf311922ce8566ec80396c9"
+  "gitHead": "d58b5d3004764ee295772c400b8cbc1212ea9a35"
 }
