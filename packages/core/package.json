@@ -18,5 +18,6 @@
   },
   "dependencies": {
     "@xnate-cli/utils": "^1.0.1"
-  }
+  },
+  "gitHead": "359c11a314b9e1b2cdf311922ce8566ec80396c9"
 }

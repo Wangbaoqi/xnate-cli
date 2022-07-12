@@ -4,3 +4,4 @@ node_modules
 
 package/**/node_modules
 package/**/package-lock.json
+lerna-debug.log
