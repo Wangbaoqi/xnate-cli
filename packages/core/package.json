@@ -1,6 +1,6 @@
 {
   "name": "@xnate-cli/core",
-  "version": "1.0.3",
+  "version": "1.0.0",
   "description": "xnate-cli core",
   "author": "Wangbaoqi <wangbaoqi8839@gmail.com>",
   "homepage": "",
@@ -22,5 +22,5 @@
   "dependencies": {
     "@xnate-cli/utils": "^1.0.3"
   },
-  "gitHead": "d58b5d3004764ee295772c400b8cbc1212ea9a35"
+  "gitHead": "d181600fc9a63f887e9e459fde6050ad06911d35"
 }
