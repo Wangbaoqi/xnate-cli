@@ -19,6 +19,9 @@
   "scripts": {
     "test": "echo \"run tests from core\""
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@xnate-cli/utils": "^1.0.3"
   },
