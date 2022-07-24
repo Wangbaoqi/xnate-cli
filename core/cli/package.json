@@ -23,7 +23,19 @@
     "access": "public"
   },
   "dependencies": {
-    "@xnate-cli/utils": "^1.0.4"
+    "@xnate-cli/log": "file:../../utils/log",
+    "@xnate-cli/npm-info": "file:../../utils/npm-info",
+    "@xnate-cli/init": "file:../../commands/init",
+    "@xnate-cli/exec": "file:../exec",
+    "colors": "^1.4.0",
+    "commander": "^9.4.0",
+    "dotenv": "^16.0.1",
+    "import-local": "^3.1.0",
+    "npmlog": "^6.0.2",
+    "path-exists": "^5.0.0",
+    "root-check": "^2.0.0",
+    "semver": "^7.3.7",
+    "user-home": "^3.0.0"
   },
   "gitHead": "d181600fc9a63f887e9e459fde6050ad06911d35"
 }

@@ -1,0 +1,33 @@
+{
+  "name": "@xnate-cli/exec",
+  "version": "1.0.0",
+  "description": "xnate-cli execute pacakage ",
+  "author": "Wangbaoqi <wangbaoqi8839@gmail.com>",
+  "homepage": "https://github.com/Wangbaoqi/xnate-cli#readme",
+  "license": "ISC",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wangbaoqi/xnate-cli.git"
+  },
+  "dependencies": {
+    "@xnate-cli/package": "file:../../models/package",
+    "@xnate-cli/log": "file:../../utils/log"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/Wangbaoqi/xnate-cli/issues"
+  }
+}
