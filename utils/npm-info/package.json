@@ -1,7 +1,7 @@
 {
   "name": "npm-info",
-  "version": "1.0.4",
-  "description": "> TODO: description",
+  "version": "1.0.0",
+  "description": "> xnate-cli get npm info description",
   "author": "Wangbaoqi <wangbaoqi8839@gmail.com>",
   "homepage": "https://github.com/Wangbaoqi/xnate-cli#readme",
   "license": "ISC",

@@ -2,6 +2,7 @@
 
 const pkgDir = require('pkg-dir').sync;
 const npminstall = require('npminstall');
+const fse = require('fs-extra');
 const path = require('path');
 const pathExists = require('path-exists').sync;
 const formatPath = require('@xnate-cli/format-path');
@@ -35,7 +36,14 @@ class Package {
 		return path.resolve(this.storeDir, `_${this.cacheFilePathPrefix}@${this.packageVersion}@${this.packageName}`);
 	}
 
+	getSpecificPackageVersion(packageVersion) {
+		return path.resolve(this.storeDir, `_${this.cacheFilePathPrefix}@${packageVersion}@${this.packageName}`);
+	}
+
 	async prepare() {
+		if (this.storeDir && !pathExists(this.storeDir)) {
+			fse.mkdirpSync(this.storeDir);
+		}
 		if (this.packageVersion === 'latest') {
 			this.packageVersion = await getNpmLastestVersion(this.packageName)
 		}
@@ -66,9 +74,28 @@ class Package {
 	}
 
 	// update package
-	update() {
-
-		
+	async update() {
+		await this.prepare();
+		// 1. get lastest installed packageVersion
+		const latestPackageVersion = await getNpmLastestVersion(this.packageName);
+		// 2. search lastest version whether exists or not
+		const latestFilePath = this.getSpecificPackageVersion(latestPackageVersion);
+		// 3. if not exists, install latest package versions
+		if (!pathExists(latestFilePath)) { 
+			await npminstall({
+				root: this.targetPath,
+				storeDir: this.storeDir,
+				registry: getDefaultRegistry(),
+				pkgs: [
+					{
+						name: this.packageName, version: latestPackageVersion
+					}
+				]
+			})
+			// update current packageVersion
+			this.packageVersion = latestPackageVersion
+		}
+		// return latestFilePath;
 	}
 
 	// get entry file path
@@ -78,17 +105,25 @@ class Package {
 		// 3. main/lib - path
 		// 4. be compatible MacOs/Window
 
-		const dir = pkgDir(this.targetPath);
-
-		if (dir) { 
-			const pkgFile = require(path.resolve(dir, 'package.json'));
-			if (pkgFile?.main) {
-				return formatPath(path.resolve(dir, pkgFile.main))
+		const _getRootPath = (targetPath) => {
+			const dir = pkgDir(targetPath);
+			if (dir) { 
+				const pkgFile = require(path.resolve(dir, 'package.json'));
+				if (pkgFile?.main) {
+					return formatPath(path.resolve(dir, pkgFile.main))
+				}
+				console.log('package.json file path: ' + pkgFile);
 			}
-			console.log('package.json file path: ' + pkgFile);
+			
+			return null;
 		}
-		
-		return null;
+
+		// use storeDir
+		if (this.storeDir) {
+			return _getRootPath(this.cacheFilePath);
+		} else {
+			return _getRootPath(this.targetPath);
+		}
 	}
 }
 

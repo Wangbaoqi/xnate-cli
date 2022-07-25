@@ -27,7 +27,7 @@ const getDefaultRegistry = (isOrginal = false) => {
 
 const getNpmVersion = async (npmName, registry) => {
   const data = await getNpmInfo(npmName, registry);
-  return data ? Object.keys(data.versions) : []
+  return data.versions ? Object.keys(data.versions) : [];
 }
 
 const getNpmSemverVersions = (baseVersion, versions) => {

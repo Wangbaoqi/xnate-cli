@@ -24,6 +24,7 @@
     "@xnate-cli/format-path": "file:../../utils/format-path",
     "@xnate-cli/npm-info": "file:../../utils/npm-info",
     "@xnate-cli/utils": "file:../../utils/utils",
+    "fs-extra": "^10.1.0",
     "npminstall": "^6.5.0",
     "path-exists": "^4.0.0",
     "pkg-dir": "^5.0.0"

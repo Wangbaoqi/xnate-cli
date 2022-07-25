@@ -43,6 +43,7 @@ async function exec() {
 	
 		if (await pkg.exists()) {
 			// update package
+			await pkg.update();
 
 		} else {
 			// install package
@@ -68,8 +69,6 @@ async function exec() {
 	// 3. Package.getRootFile(get entry file)
 	// 4. Package.update / .install
 
-
-	// 
 }
 
 
