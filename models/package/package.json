@@ -21,9 +21,9 @@
     "url": "git+https://github.com/Wangbaoqi/xnate-cli.git"
   },
   "dependencies": {
-    "@xnate-cli/format-path": "file:../../utils/format-path",
-    "@xnate-cli/npm-info": "file:../../utils/npm-info",
-    "@xnate-cli/utils": "file:../../utils/utils",
+    "@xnate-cli/format-path": "^1.0.0",
+    "@xnate-cli/npm-info": "^1.0.0",
+    "@xnate-cli/utils": "^1.0.4",
     "fs-extra": "^10.1.0",
     "npminstall": "^6.5.0",
     "path-exists": "^4.0.0",
@@ -34,5 +34,6 @@
   },
   "bugs": {
     "url": "https://github.com/Wangbaoqi/xnate-cli/issues"
-  }
+  },
+  "gitHead": "da27b35527e659f495629dcb09a97432f6bc8bf0"
 }
