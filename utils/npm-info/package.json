@@ -1,5 +1,5 @@
 {
-  "name": "npm-info",
+  "name": "@xnate-cli/npm-info",
   "version": "1.0.0",
   "description": "> xnate-cli get npm info description",
   "author": "Wangbaoqi <wangbaoqi8839@gmail.com>",
