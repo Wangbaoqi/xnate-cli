@@ -53,15 +53,16 @@ class Package {
 	async exists() {
 		if (this.storeDir) {
 			await this.prepare();
-		} else {
 			return pathExists(this.cacheFilePath)
+		} else {
+			return pathExists(this.targetPath)
 		}
 	}
 
 	// install package
 	async install() {
 		await this.prepare()
-		npminstall({
+		return npminstall({
 			root: this.targetPath,
 			storeDir: this.storeDir,
 			registry: getDefaultRegistry(),
@@ -92,9 +93,9 @@ class Package {
 					}
 				]
 			})
-			// update current packageVersion
-			this.packageVersion = latestPackageVersion
 		}
+		// update current packageVersion
+		this.packageVersion = latestPackageVersion
 		// return latestFilePath;
 	}
 
@@ -112,9 +113,7 @@ class Package {
 				if (pkgFile?.main) {
 					return formatPath(path.resolve(dir, pkgFile.main))
 				}
-				console.log('package.json file path: ' + pkgFile);
 			}
-			
 			return null;
 		}
 

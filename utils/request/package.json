@@ -1,7 +1,7 @@
 {
-  "name": "@xnate-cli/init",
+  "name": "@xnate-cli/request",
   "version": "1.0.0",
-  "description": "xnate-cli init project",
+  "description": "> xnate-cli request",
   "author": "Wangbaoqi <wangbaoqi8839@gmail.com>",
   "homepage": "https://github.com/Wangbaoqi/xnate-cli#readme",
   "license": "ISC",
@@ -16,17 +16,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "dependencies": {
-    "@xnate-cli/command": "file:../../models/command",
-    "@xnate-cli/log": "file:../../utils/log",
-    "@xnate-cli/package": "file:../../models/package",
-    "@xnate-cli/request": "file:../../utils/request",
-    "@xnate-cli/utils": "file:../../utils/utils",
-    "fs-extra": "^10.1.0",
-    "inquirer": "^9.0.2",
-    "semver": "^7.3.7",
-    "user-home": "^3.0.0"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Wangbaoqi/xnate-cli.git"
@@ -37,5 +26,7 @@
   "bugs": {
     "url": "https://github.com/Wangbaoqi/xnate-cli/issues"
   },
-  "gitHead": "da27b35527e659f495629dcb09a97432f6bc8bf0"
+  "dependencies": {
+    "axios": "^0.27.2"
+  }
 }

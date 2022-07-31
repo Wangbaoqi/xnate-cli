@@ -1,10 +1,265 @@
 'use strict';
 
 
-function init(projectName, option, cmd) {
-	console.log(projectName, option, process.env.CLI_TARGET_PATH);
+const fs = require('fs');
+const path = require('path');
+const inquirer = require('inquirer');
+const fse = require('fs-extra');
+const semver = require('semver');
+const userHome = require('user-home');
+
+const Command = require('@xnate-cli/command');
+const log = require('@xnate-cli/log')
+const utils = require('@xnate-cli/utils');
+const Package = require('@xnate-cli/package');
+
+
+const getProjectTemplate = require('./getProjectTemplate');
+
+const TYPE_PROJECT = 'project';
+const TYPE_COMPONENT = 'component';
+
+class initCommand extends Command { 
+
+	init() {
+		this.projectName = this._argv[0] || '';
+    this.force = !!this._cmd.force;
+    log.verbose('projectName', this.projectName);
+    log.verbose('force', this.force);
+	}
+
+	async exec() { 
+		try {
+			// 1. prepare stage
+      const projectInfo = await this.prepare();
+      if (projectInfo) {
+        // 2. downloadTemplate
+        log.verbose('projectInfo', projectInfo);
+        this.projectInfo = projectInfo;
+        await this.downloadTemplate();
+        // 3. installTemplate
+        await this.installTemplate();
+      }
+		} catch (error) {
+			log.error(e.message);
+      if (process.env.LOG_LEVEL === 'verbose') {
+        console.log(e);
+      }
+		}
+	}
+
+	async prepare() {
+		// 0. judge project template exists
+		const template = await getProjectTemplate();
+    if (!template || template.length === 0) {
+      throw new Error('project template not found');
+    }
+    this.template = template;
+    // 1. judge project template whether empty
+    const localPath = process.cwd();
+    if (!this.isDirEmpty(localPath)) {
+      let ifContinue = false;
+      if (!this.force) {
+        // ask for continue create project template
+        ifContinue = (await inquirer.prompt({
+          type: 'confirm',
+          name: 'ifContinue',
+          default: false,
+          message: 'current project template is not empty, whether you want to continue create project ?',
+        })).ifContinue;
+        if (!ifContinue) {
+          return;
+        }
+      }
+      // 2. whether call clear directory
+      if (ifContinue || this.force) {
+        // ask secondery 
+        const { confirmDelete } = await inquirer.prompt({
+          type: 'confirm',
+          name: 'confirmDelete',
+          default: false,
+          message: 'whether confirm clear current directory files ?',
+        });
+        if (confirmDelete) {
+          // clear current directory
+          fse.emptyDirSync(localPath);
+        }
+      }
+		}
+		return this.getprojectInfo();
+	}
+
+	async getProjectInfo() {
+    function isValidName(v) {
+      return /^[a-zA-Z]+([-][a-zA-Z][a-zA-Z0-9]*|[_][a-zA-Z][a-zA-Z0-9]*|[a-zA-Z0-9])*$/.test(v);
+    }
+
+    let projectInfo = {};
+    let isProjectNameValid = false;
+    if (isValidName(this.projectName)) {
+      isProjectNameValid = true;
+      projectInfo.projectName = this.projectName;
+    }
+    // 1. choose create project or component
+    const { type } = await inquirer.prompt({
+      type: 'list',
+      name: 'type',
+      message: 'please select a init type',
+      default: TYPE_PROJECT,
+      choices: [{
+        name: 'project',
+        value: TYPE_PROJECT,
+      }, {
+        name: 'component',
+        value: TYPE_COMPONENT,
+      }],
+    });
+    log.verbose('type', type);
+    this.template = this.template.filter(template =>
+      template.tag.includes(type));
+    const title = type === TYPE_PROJECT ? 'project' : 'component';
+    const projectNamePrompt = {
+      type: 'input',
+      name: 'projectName',
+      message: `please input ${title} name`,
+      default: '',
+      validate: function(v) {
+        const done = this.async();
+        setTimeout(function() {
+          // 1.首字符必须为英文字符
+          // 2.尾字符必须为英文或数字，不能为字符
+          // 3.字符仅允许"-_"
+          if (!isValidName(v)) {
+            done(`please input valid ${title} name`);
+            return;
+          }
+          done(null, true);
+        }, 0);
+      },
+      filter: function(v) {
+        return v;
+      },
+    };
+    const projectPrompt = [];
+    if (!isProjectNameValid) {
+      projectPrompt.push(projectNamePrompt);
+    }
+    projectPrompt.push({
+        type: 'input',
+        name: 'projectVersion',
+        message: `please input ${title} version`,
+        default: '1.0.0',
+        validate: function(v) {
+          const done = this.async();
+          setTimeout(function() {
+            if (!(!!semver.valid(v))) {
+              done('please input valid version');
+              return;
+            }
+            done(null, true);
+          }, 0);
+        },
+        filter: function(v) {
+          if (!!semver.valid(v)) {
+            return semver.valid(v);
+          } else {
+            return v;
+          }
+        },
+      },
+      {
+        type: 'list',
+        name: 'projectTemplate',
+        message: `please choice ${title} template`,
+        choices: this.createTemplateChoice(),
+      });
+    if (type === TYPE_PROJECT) {
+      // 2. getProjectTemplate information
+      const project = await inquirer.prompt(projectPrompt);
+      projectInfo = {
+        ...projectInfo,
+        type,
+        ...project,
+      };
+    } else if (type === TYPE_COMPONENT) {
+      const descriptionPrompt = {
+        type: 'input',
+        name: 'componentDescription',
+        message: 'please input component description',
+        default: '',
+        validate: function(v) {
+          const done = this.async();
+          setTimeout(function() {
+            if (!v) {
+              done('please input component description');
+              return;
+            }
+            done(null, true);
+          }, 0);
+        },
+      };
+      projectPrompt.push(descriptionPrompt);
+      // 2. get component description 
+      const component = await inquirer.prompt(projectPrompt);
+      projectInfo = {
+        ...projectInfo,
+        type,
+        ...component,
+      };
+    }
+    // 生成classname
+    // if (projectInfo.projectName) {
+    //   projectInfo.name = projectInfo.projectName;
+    //   projectInfo.className = require('kebab-case')(projectInfo.projectName).replace(/^-/, '');
+    // }
+    // if (projectInfo.projectVersion) {
+    //   projectInfo.version = projectInfo.projectVersion;
+    // }
+    // if (projectInfo.componentDescription) {
+    //   projectInfo.description = projectInfo.componentDescription;
+    // }
+    return projectInfo;
+  }
+
+  isDirEmpty(localPath) {
+    let fileList = fs.readdirSync(localPath);
+    // file filter 
+    fileList = fileList.filter(file => (
+      !file.startsWith('.') && ['node_modules'].indexOf(file) < 0
+    ));
+    return !fileList || fileList.length <= 0;
+  }
+
+  createTemplateChoice() {
+    return this.template.map(item => ({
+      value: item.npmName,
+      name: item.name,
+    }));
+  }
+
+	async installTemplate() {
+    log.verbose('templateInfo', this.templateInfo);
+    if (this.templateInfo) {
+      if (!this.templateInfo.type) {
+        this.templateInfo.type = TEMPLATE_TYPE_NORMAL;
+      }
+      if (this.templateInfo.type === TEMPLATE_TYPE_NORMAL) {
+        // 标准安装
+        await this.installNormalTemplate();
+      } else if (this.templateInfo.type === TEMPLATE_TYPE_CUSTOM) {
+        // 自定义安装
+        await this.installCustomTemplate();
+      } else {
+        throw new Error('无法识别项目模板类型！');
+      }
+    } else {
+      throw new Error('项目模板信息不存在！');
+    }
+  }
 }
 
-
+function init(argv) {
+	return new initCommand(argv)
+}
 
 module.exports = init;
