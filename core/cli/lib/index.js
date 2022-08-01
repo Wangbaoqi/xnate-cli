@@ -19,7 +19,6 @@ const log = require('@xnate-cli/log')
 const { LOWEST_NODE_VERSION, DEFAULT_CLI_HOME } = require('./const');
 
 
-let args, config;
 
 const program = new commander.Command()
 

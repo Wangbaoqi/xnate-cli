@@ -14,7 +14,7 @@ const utils = require('@xnate-cli/utils');
 const Package = require('@xnate-cli/package');
 
 
-const getProjectTemplate = require('./getProjectTemplate');
+const getProjectTemplate = require('./getProjectTmp');
 
 const TYPE_PROJECT = 'project';
 const TYPE_COMPONENT = 'component';
@@ -38,15 +38,59 @@ class initCommand extends Command {
         this.projectInfo = projectInfo;
         await this.downloadTemplate();
         // 3. installTemplate
-        await this.installTemplate();
+        // await this.installTemplate();
       }
-		} catch (error) {
+		} catch (e) {
 			log.error(e.message);
       if (process.env.LOG_LEVEL === 'verbose') {
         console.log(e);
       }
 		}
 	}
+
+	async downloadTemplate() {
+    const { projectTemplate } = this.projectInfo;
+    const templateInfo = this.template.find(item => item.npmName === projectTemplate);
+    const targetPath = path.resolve(userHome, '.xnate-cli', 'template');
+    const storeDir = path.resolve(userHome, '.xnate-cli', 'template', 'node_modules');
+    const { npmName, version } = templateInfo;
+    this.templateInfo = templateInfo;
+    const templateNpm = new Package({
+      targetPath,
+      storeDir,
+      packageName: npmName,
+      packageVersion: version,
+    });
+    if (!await templateNpm.exists()) {
+      // const spinner = spinnerStart('正在下载模板...');
+      // await sleep();
+      try {
+        await templateNpm.install();
+      } catch (e) {
+        throw e;
+      } finally {
+        // spinner.stop(true);
+        if (await templateNpm.exists()) {
+          log.success('templateNpm download successfully');
+          this.templateNpm = templateNpm;
+        }
+      }
+    } else {
+      // const spinner = spinnerStart('正在更新模板...');
+      // await sleep();
+      try {
+        await templateNpm.update();
+      } catch (e) {
+        throw e;
+      } finally {
+        // spinner.stop(true);
+        if (await templateNpm.exists()) {
+          log.success('update templateNpm successfully');
+          this.templateNpm = templateNpm;
+        }
+      }
+    }
+  }
 
 	async prepare() {
 		// 0. judge project template exists

@@ -21,8 +21,9 @@
     "url": "git+https://github.com/Wangbaoqi/xnate-cli.git"
   },
   "dependencies": {
-    "@xnate-cli/log": "^1.0.0",
-    "@xnate-cli/package": "^1.0.0"
+    "@xnate-cli/log": "file:../../utils/log",
+    "@xnate-cli/package": "file:../../models/package",
+    "@xnate-cli/utils": "file:../../utils/utils"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
