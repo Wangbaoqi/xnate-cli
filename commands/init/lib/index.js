@@ -7,23 +7,26 @@ const inquirer = require('inquirer');
 const fse = require('fs-extra');
 const semver = require('semver');
 const userHome = require('user-home');
+const ora = require('ora');
 
 const Command = require('@xnate-cli/command');
 const log = require('@xnate-cli/log')
 const utils = require('@xnate-cli/utils');
 const Package = require('@xnate-cli/package');
 
-
 const getProjectTemplate = require('./getProjectTmp');
 
 const TYPE_PROJECT = 'project';
 const TYPE_COMPONENT = 'component';
 
+const spinner = ora();
 class initCommand extends Command { 
 
 	init() {
 		this.projectName = this._argv[0] || '';
-    this.force = !!this._cmd.force;
+		this.force = !!this._cmd.force;
+		this.template = [];
+		this.projectInfo = {};
     log.verbose('projectName', this.projectName);
     log.verbose('force', this.force);
 	}
@@ -62,28 +65,30 @@ class initCommand extends Command {
       packageVersion: version,
     });
     if (!await templateNpm.exists()) {
-      // const spinner = spinnerStart('正在下载模板...');
-      // await sleep();
-      try {
-        await templateNpm.install();
+			try {
+				spinner.start();
+				spinner.text = 'install template modules';
+				spinner.color = 'green';
+				await templateNpm.install();
       } catch (e) {
         throw e;
       } finally {
-        // spinner.stop(true);
         if (await templateNpm.exists()) {
           log.success('templateNpm download successfully');
           this.templateNpm = templateNpm;
-        }
+				}
+				spinner.stop();
       }
     } else {
-      // const spinner = spinnerStart('正在更新模板...');
-      // await sleep();
+      spinner.start();
+			spinner.text = 'install template modules';
+			spinner.color = 'green';
       try {
         await templateNpm.update();
       } catch (e) {
         throw e;
       } finally {
-        // spinner.stop(true);
+        spinner.stop();
         if (await templateNpm.exists()) {
           log.success('update templateNpm successfully');
           this.templateNpm = templateNpm;
@@ -93,9 +98,13 @@ class initCommand extends Command {
   }
 
 	async prepare() {
+		spinner.start();
+		spinner.color = 'yellow';
+		spinner.text = 'Loading template...';
 		// 0. judge project template exists
 		const template = await getProjectTemplate();
-    if (!template || template.length === 0) {
+		spinner.stop(true);
+    if (!template || !template.length) {
       throw new Error('project template not found');
     }
     this.template = template;
@@ -109,7 +118,7 @@ class initCommand extends Command {
           type: 'confirm',
           name: 'ifContinue',
           default: false,
-          message: 'current project template is not empty, whether you want to continue create project ?',
+          message: 'current file fold is not empty, whether you want to continue create project ?',
         })).ifContinue;
         if (!ifContinue) {
           return;
@@ -130,7 +139,7 @@ class initCommand extends Command {
         }
       }
 		}
-		return this.getprojectInfo();
+		return this.getProjectInfo();
 	}
 
 	async getProjectInfo() {
@@ -159,8 +168,7 @@ class initCommand extends Command {
       }],
     });
     log.verbose('type', type);
-    this.template = this.template.filter(template =>
-      template.tag.includes(type));
+    // this.template = this.template.filter(tmp => tmp.);
     const title = type === TYPE_PROJECT ? 'project' : 'component';
     const projectNamePrompt = {
       type: 'input',

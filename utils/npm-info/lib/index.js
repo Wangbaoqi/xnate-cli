@@ -46,9 +46,8 @@ const getNpmSemverVersion = async (baseVersion, npmName, registry) => {
 
 const getNpmLastestVersion = async (npmName, registry) => {
   const versions = await getNpmVersion(npmName, registry);
-  versions && versions.sort((a, b) => semver.gt(b, a));
+  versions && versions.sort((a, b) => semver.rcompare(a, b));
   return versions[0];
-
 }
 
 module.exports = {

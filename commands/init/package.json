@@ -24,6 +24,7 @@
     "@xnate-cli/utils": "file:../../utils/utils",
     "fs-extra": "^10.1.0",
     "inquirer": "^8.0.0",
+    "ora": "^5.4.0",
     "semver": "^7.3.7",
     "user-home": "^3.0.0"
   },
