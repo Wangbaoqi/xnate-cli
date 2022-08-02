@@ -4,4 +4,7 @@ node_modules
 
 package/**/node_modules
 package/**/package-lock.json
+
+website/**/node_modules
+website/**/package-lock.json
 lerna-debug.log
