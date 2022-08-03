@@ -1,11 +1,11 @@
-# `@xnate/cli`
+# `@xnate/utils`
 
 > TODO: description
 
 ## Usage
 
 ```
-const cli = require('@xnate/cli');
+const utils = require('@xnate/utils');
 
 // TODO: DEMONSTRATE API
 ```

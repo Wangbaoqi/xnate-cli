@@ -1,9 +1,9 @@
 {
-  "name": "@xnate-cli/core",
+  "name": "@xnate/core",
   "version": "1.0.4",
   "description": "xnate-cli core",
   "author": "Wangbaoqi <wangbaoqi8839@gmail.com>",
-  "homepage": "",
+  "homepage": "https://github.com/Wangbaoqi/xnate-cli#readme",
   "license": "ISC",
   "main": "lib/core.js",
   "directories": {
@@ -37,5 +37,11 @@
     "semver": "^7.3.7",
     "user-home": "^3.0.0"
   },
-  "gitHead": "d181600fc9a63f887e9e459fde6050ad06911d35"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wangbaoqi/xnate-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wangbaoqi/xnate-cli/issues"
+  }
 }
