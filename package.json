@@ -11,7 +11,8 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:website": "yarn workspace website start"
+    "start:website": "yarn workspace website start",
+    "deploy:website": "yarn workspace website vercel"
   },
   "keywords": [],
   "author": "",

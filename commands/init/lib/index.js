@@ -11,13 +11,15 @@ const ora = require('ora');
 
 const Command = require('@xnate-cli/command');
 const log = require('@xnate-cli/log')
-const utils = require('@xnate-cli/utils');
+const {exec: spawn} = require('@xnate-cli/utils');
 const Package = require('@xnate-cli/package');
 
 const getProjectTemplate = require('./getProjectTmp');
 
 const TYPE_PROJECT = 'project';
 const TYPE_COMPONENT = 'component';
+const TEMPLATE_TYPE_NORMAL = 'normal';
+const TEMPLATE_TYPE_CUSTOM = 'custom';
 
 const spinner = ora();
 class initCommand extends Command { 
@@ -41,7 +43,7 @@ class initCommand extends Command {
         this.projectInfo = projectInfo;
         await this.downloadTemplate();
         // 3. installTemplate
-        // await this.installTemplate();
+        await this.installTemplate();
       }
 		} catch (e) {
 			log.error(e.message);
@@ -57,13 +59,15 @@ class initCommand extends Command {
     const targetPath = path.resolve(userHome, '.xnate-cli', 'template');
     const storeDir = path.resolve(userHome, '.xnate-cli', 'template', 'node_modules');
     const { npmName, version } = templateInfo;
-    this.templateInfo = templateInfo;
     const templateNpm = new Package({
       targetPath,
       storeDir,
       packageName: npmName,
       packageVersion: version,
     });
+    this.templateNpm = templateNpm;
+    this.templateInfo = templateInfo;
+
     if (!await templateNpm.exists()) {
 			try {
 				spinner.start();
@@ -289,17 +293,18 @@ class initCommand extends Command {
     }));
   }
 
+  // install template
 	async installTemplate() {
     log.verbose('templateInfo', this.templateInfo);
     if (this.templateInfo) {
-      if (!this.templateInfo.type) {
+      if (!this.templateInfo?.type) {
         this.templateInfo.type = TEMPLATE_TYPE_NORMAL;
       }
       if (this.templateInfo.type === TEMPLATE_TYPE_NORMAL) {
-        // 标准安装
+        // normal template install
         await this.installNormalTemplate();
       } else if (this.templateInfo.type === TEMPLATE_TYPE_CUSTOM) {
-        // 自定义安装
+        // custom template install
         await this.installCustomTemplate();
       } else {
         throw new Error('无法识别项目模板类型！');
@@ -307,6 +312,44 @@ class initCommand extends Command {
     } else {
       throw new Error('项目模板信息不存在！');
     }
+  }
+
+  async installCustomTemplate() { 
+
+  }
+
+  async installNormalTemplate() { 
+
+    spinner.start();
+		spinner.color = 'yellow';
+		spinner.text = 'install normal template...';
+
+    const templatePath = path.resolve(this.templateNpm.cacheFilePath, 'template');
+    const targetPath = process.cwd();
+
+    fse.ensureDirSync(templatePath);
+    fse.ensureDirSync(targetPath);
+    fse.copySync(templatePath, targetPath);
+
+    spinner.stop();
+
+
+    log.notice('template install...');
+
+    await this.npmInstall(targetPath);
+
+    log.notice('template installed successfully 🎉🎉🎉');
+
+
+
+  }
+
+  async npmInstall(targetPath) {
+    return new Promise((resolve, reject) => { 
+      const ret = spawn('npm', ['install'], { cwd: targetPath, stdio: 'inherit' });
+      ret.on('error', reject)
+      ret.on('exit', resolve)
+    })
   }
 }
 

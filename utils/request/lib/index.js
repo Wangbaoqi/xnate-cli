@@ -2,8 +2,10 @@
 
 const axios = require('axios');
 
+console.log(process.env.XNATE_CLI_BASE_URL, 'url');
+
 const BASE_URL = process.env.XNATE_CLI_BASE_URL ? process.env.XNATE_CLI_BASE_URL :
-  'http://cli.wangbaoqi.tech:7001';
+  'http://cli-dev.wangbaoqi.tech:7001';
 
 const request = axios.create({
   baseURL: BASE_URL,
