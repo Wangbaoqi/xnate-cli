@@ -1,5 +1,4 @@
 
-
 const semver = require('semver');
 const { request } = require('./request');
 
@@ -20,7 +19,6 @@ exports.getRegistry = (type = 'npm') => {
 exports.getNpmInfo = async (npm, registry) => {
   registry = registry || exports.getRegistry(registry);
   const url = `${registry}/${npm}`;
-  console.log(url, 'url get');
   try {
     return await request.get(url)
   } catch (error) {
@@ -44,7 +42,7 @@ exports.getNpmLatestVersion = async (npm, registry) => {
 exports.isUpdateCli = async (curVersion, {npmName, registry}) => { 
   const lastestVersion = await exports.getNpmLatestVersion(npmName, registry);
   return {
-    isNeedUpdate: lastestVersion && semver.lt(lastestVersion, curVersion),
+    isNeedUpdate: lastestVersion && semver.lte(lastestVersion, curVersion),
     lastestVersion
   }
 }

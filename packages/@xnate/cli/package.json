@@ -1,6 +1,6 @@
 {
   "name": "@xnate/cli",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "> TODO: description",
   "author": "Wangbaoqi <wangbaoqi8839@gmail.com>",
   "homepage": "https://github.com/Wangbaoqi/xnate-cli#readme",
@@ -31,9 +31,13 @@
   },
   "dependencies": {
     "@xnate/cli-shared-utils": "file:../cli-shared-utils",
+    "commander": "^9.4.0",
     "dotenv": "^16.0.1",
     "fs-extra": "^10.1.0",
-    "minimist": "^1.2.6"
+    "inquirer": "^8.0.0",
+    "minimist": "^1.2.6",
+    "npminstall": "^6.5.0",
+    "validate-npm-package-name": "^4.0.0"
   },
   "engines": {
     "node": ">=12"
