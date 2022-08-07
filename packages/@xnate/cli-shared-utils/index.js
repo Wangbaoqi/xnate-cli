@@ -1,5 +1,6 @@
 
 [
+  'env',
   'log',
   'npm',
   'exit',

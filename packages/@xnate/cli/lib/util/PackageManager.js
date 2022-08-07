@@ -6,6 +6,8 @@ const path = require('path');
 const npminstall = require('npminstall');
 
 const registry = require('./registry');
+const { getNpmLatestVersion } = require('@xnate/cli-shared-utils');
+
 
 class PackageManager {
 
@@ -44,22 +46,28 @@ class PackageManager {
   }
 
   async install() {
-    const { root, storeDir, registry, name, version } = this;
+    return await this.runCommand();
+  }
 
+  async update() {
+    this.version = await getNpmLatestVersion(this.name);
+    return await this.runCommand();
+  }
+
+  async existsCache() {
     await this.prepare();
+    return fs.pathExistsSync(this.npmFilePath);
+  }
 
+  async runCommand() {
+    const { root, storeDir, registry, name, version } = this;
+    await this.prepare();
     return npminstall({
       root,
       storeDir,
       registry,
       pkgs: [{ name, version }]
     })
-  }
-
-  async existsCache() {
-    await this.prepare();
-    console.log(this.npmFilePath);
-    return fs.pathExistsSync(this.npmFilePath);
   }
 }
 
