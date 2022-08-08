@@ -1,21 +1,22 @@
 
-const inquirer = require('inquirer');
 
 
-exports.typePrompt = {
-  type: 'list',
-  name: 'initType',
-  message: 'please select a init template type',
-  default: 'normal',
-  choices: [
-    {
-      name: 'normal',
-      value: 'normal'
-    }, {
-      name: 'customize',
-      value: 'custom'
-    }
-  ]
+exports.typePrompt = () => {
+  return {
+    type: 'list',
+    name: 'type',
+    message: 'please select a init template type',
+    default: 'project',
+    choices: [
+      {
+        name: 'project',
+        value: 'project'
+      }, {
+        name: 'component',
+        value: 'component'
+      }
+    ]
+  }
 }
 
 exports.versionPrompt = {
@@ -37,9 +38,9 @@ exports.templatePrompt = (tmpList) => {
   return {
     type: 'list',
     name: 'templateName',
-    message: 'please pick a template',
+    message: 'please pick a template for your project',
     default: '',
-    choices: [...tmp_project, new inquirer.Separator(), ...tmp_component]
+    choices: tmpList
   }
 }
 
@@ -47,8 +48,8 @@ exports.registryPrompt = () => {
   return {
     type: 'list',
     name: 'registry',
-    message: 'please pick a registry for installation',
-    default: '',
+    message: 'please pick a registry for download template',
+    default: 'taobao',
     choices: [
       {
         name: 'npm',
@@ -60,6 +61,29 @@ exports.registryPrompt = () => {
       },
       {
         name: 'yarn',
+        value: 'yarn',
+      }
+    ]
+  }
+}
+
+exports.pkmPrompt = () => { 
+  return {
+    type: 'list',
+    name: 'pkmbin',
+    message: 'please pick a package manager to use when install dependencies',
+    default: 'yarn',
+    choices: [
+      {
+        name: 'Use NPM',
+        value: 'npm',
+      },
+      {
+        name: 'Use PNPM',
+        value: 'pnpm',
+      },
+      {
+        name: 'Use Yarn',
         value: 'yarn',
       }
     ]

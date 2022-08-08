@@ -12,4 +12,4 @@
 
 exports.semver = require('semver');
 exports.chalk = require('chalk');
-
+exports.execa = require('execa');
