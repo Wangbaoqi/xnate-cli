@@ -143,7 +143,6 @@ class Initial extends EventEmitter {
       throw e
     }
     
-    console.log();
     console.log(`🎉  Successfully created project ${chalk.yellow(name)}`);
     console.log(
       `👉  Get started with the following commands:\n\n` +

@@ -1,10 +1,7 @@
 'use strict';
 
-
-function index() {
-    
-}
+const log = require('npmlog');
 
 
 
-module.exports = index;
+module.exports = log;

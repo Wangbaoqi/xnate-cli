@@ -30,22 +30,24 @@ module.exports = function execCommand(command, args, options, cwd) {
   return new Promise((resolve, reject) => { 
     const child = execa(command, args, {
       cwd,
-      stdio: ['inherit', 'inherit', 'pipe']
+      stdio: ['inherit', 'inherit', command === 'yarn' ? 'pipe' : 'inherit']
     })
 
-    child.stderr.on('data', chunk => {
-      const str = chunk.toString();
-      if (/warning/.test(str)) {
-        return
-      }
-      const progressBarMatch = str.match(/\[.*\] (\d+)\/(\d+)/)
-
-      if (progressBarMatch) {
-        renderProgressBar(progressBarMatch[1], (progressBarMatch[2]))
-        return;
-      }
-      process.stderr.write(chunk)
-    })
+    if (command === 'yarn') { 
+      child.stderr.on('data', chunk => {
+        const str = chunk.toString();
+        if (/warning/.test(str)) {
+          return
+        }
+        const progressBarMatch = str.match(/\[.*\] (\d+)\/(\d+)/)
+  
+        if (progressBarMatch) {
+          renderProgressBar(progressBarMatch[1], (progressBarMatch[2]))
+          return;
+        }
+        process.stderr.write(chunk)
+      })
+    }
 
     child.on('close', code => {
       if (code !== 0) {

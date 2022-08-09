@@ -51,7 +51,6 @@ async function init() {
   process.env.XNATE_CLI_CACHE_MODULES = 'node_modules';
 
 
-
   // check cli update
   // const { isNeedUpdate, lastestVersion } = await isUpdateCli(pkgConfig.version, { npmName: NPM_NAME });
   // if (!isNeedUpdate) {
