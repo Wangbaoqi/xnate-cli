@@ -1,7 +1,8 @@
 {
   "packages": [
-    "packages/*"
+    "package/@xnate/*",
+    "package/@xnate-template/*"
   ],
-  "useNx": false,
+  "useNx": true,
   "version": "1.0.0"
 }
