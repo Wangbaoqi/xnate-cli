@@ -1,6 +1,7 @@
 {
   "packages": [
-    "packages/@xnate/cli*"
+    "packages/xnate-cli",
+    "packages/xnate-cli-shared"
   ],
   "useNx": false,
   "version": "0.0.2-alpha.0"

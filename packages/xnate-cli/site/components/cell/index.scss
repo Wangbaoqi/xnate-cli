@@ -1,0 +1,33 @@
+$site-cell-min-height: 40px;
+$site-cell-padding: 10px 12px;
+$site-cell-font-size: var(--site-font-size-md);
+
+
+:root {
+  --site-cell-min-height: $site-cell-min-height;
+  --site-cell-padding: $site-cell-padding;
+  --site-cell-font-size: $site-cell-font-size;
+}
+
+
+.xnate-site-cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: $site-cell-min-height;
+  outline: none;
+  padding: $site-cell-padding;
+  box-sizing: border-box;
+  font-size: $site-cell-font-size;
+
+  &__content {
+    flex: 1;
+    overflow: hidden;
+  }
+
+  &__title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
