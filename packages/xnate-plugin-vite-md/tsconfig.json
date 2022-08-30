@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "CommonJS",
+    "allowJs": false,
+    "esModuleInterop": true,
+    "sourceMap": false,
+    "outDir": "lib",
+    "rootDir": "src",
+    "baseUrl": "./",
+    "importHelpers": false,
+    "declaration": true
+  },
+  "includes": ["src/**/*.ts"],
+  "exclude": ["__tests__", "lib"]
+}

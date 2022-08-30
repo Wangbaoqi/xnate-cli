@@ -1,0 +1,41 @@
+{
+  "name": "xnate-plugin-vite-md",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Nate Wang <wangbaoqi8839@gmail.com>",
+  "homepage": "https://github.com/Wangbaoqi/xnate-cli#readme",
+  "license": "ISC",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wangbaoqi/xnate-cli.git"
+  },
+  "scripts": {
+    "test": "node ./__tests__/xnate-plugin-vite-md.test.js",
+    "dev": "tsc --watch",
+    "build": "tsc -p './"
+  },
+  "bugs": {
+    "url": "https://github.com/Wangbaoqi/xnate-cli/issues"
+  },
+  "dependencies": {
+    "highlight.js": "^11.6.0",
+    "markdown-it": "^13.0.1"
+  },
+  "peerDependencies": {
+    "vite": "^2.4.3"
+  },
+  "devDependencies": {
+    "@types/markdown-it": "^12.2.3",
+    "@types/node": "^18.7.14",
+    "typescript": "^4.8.2"
+  }
+}
