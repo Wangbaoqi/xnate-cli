@@ -41,9 +41,9 @@ async function startServer(force: boolean = true) {
 }
 
 export async function devUi() {
-  process.env.NODE_ENV === 'development';
+  process.env.NODE_ENV = 'development';
+  process.env.DEBUG = 'true';
 
-  console.log(SRC_DIR, 'SRC_DIR');
   ensureDirSync(SRC_DIR);
 
   await startServer();

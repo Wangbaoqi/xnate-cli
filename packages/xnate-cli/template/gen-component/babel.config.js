@@ -3,8 +3,8 @@ module.exports = {
     [
       require.resolve('@babel/preset-env'),
       {
-        modules: isCommonJS ? 'commonjs' : false,
-        loose: options.loose,
+        // modules: isCommonJS ? 'commonjs' : false,
+        loose: true,
       },
     ],
     require.resolve('@babel/preset-typescript'),

@@ -1,7 +1,10 @@
 import { get } from 'lodash';
 import react from '@vitejs/plugin-react';
 import { plugin, Mode } from 'vite-plugin-markdown';
+import md from '@xnate-plugin/vite-react-md';
 import { createHtmlPlugin } from 'vite-plugin-html';
+
+console.log(md({}), 'md');
 
 import {
   SITE_DIR,
@@ -33,9 +36,7 @@ export const getDevConfig = (xnateConfig: any) => {
     publicDir: SITE_PUBLIC_PATH,
     plugins: [
       react(),
-      plugin({
-        mode: [Mode.HTML, Mode.TOC, Mode.REACT],
-      }),
+      md({}),
       createHtmlPlugin({
         inject: {
           data: {

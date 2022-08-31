@@ -1,7 +1,7 @@
 {
-  "name": "xnate-plugin-vite-md",
+  "name": "@xnate-plugin/vite-react-md",
   "version": "0.0.0",
-  "description": "> TODO: description",
+  "description": "",
   "author": "Nate Wang <wangbaoqi8839@gmail.com>",
   "homepage": "https://github.com/Wangbaoqi/xnate-cli#readme",
   "license": "ISC",
@@ -31,7 +31,7 @@
     "markdown-it": "^13.0.1"
   },
   "peerDependencies": {
-    "vite": "^2.4.3"
+    "vite": "^3.0.9"
   },
   "devDependencies": {
     "@types/markdown-it": "^12.2.3",

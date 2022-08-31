@@ -1,0 +1,57 @@
+
+.xnate-site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+  user-select: none;
+  z-index: 9;
+  background: var(--site-bar-bg);
+  border-bottom: 1px solid var(--site-border-color);
+  box-sizing: border-box;
+
+  &__lead {
+    display: flex;
+    align-items: center;
+    height: inherit;
+  }
+
+  &__logo {
+    width: 32px;
+    height: 32px;
+    margin-right: 12px;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+
+  &__title {
+    font-size: 22px;
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    margin-left: 60px;
+    gap: 20px;
+    
+    &-item {
+      color: var(--site-text-color);
+      font-size: 15px;
+      &--active {
+        color: var(--site-side-bar-color);
+      }
+    }
+
+    &-link {
+    }
+  }
+
+  &__tail {
+
+  }
+}

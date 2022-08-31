@@ -5,8 +5,6 @@ import hljs from 'highlight.js';
 
 import type { Plugin, TransformResult } from 'vite';
 
-const extractComponents = (source) => {};
-
 const highlight = (str, lang, style) => {
   let link = '';
   if (lang && hljs.getLanguage(lang)) {
@@ -30,6 +28,23 @@ const markdownToReact = (code: string, options) => {
   });
 
   const html = md.render(body);
+
+  const htmlOut = `
+  import React from 'react';
+  const __html = \`${html.replace(/`/g, '&#96;')}\`;
+  const attributes = ${JSON.stringify(attributes)};
+  export default function ReactComponent(props) {
+    return <div className="markdown" dangerouslySetInnerHTML={{__html}} />
+  }
+  `;
+  const result = esbuild.transformSync(htmlOut, {
+    loader: 'jsx',
+  });
+
+  return {
+    code: result.code,
+    map: null,
+  };
 };
 
 const xnatePluginViteMd = (options): Plugin => {

@@ -8,8 +8,9 @@ Object.defineProperty(exports, '__esModule', { value: true });
 exports.getDevConfig = void 0;
 var lodash_1 = require('lodash');
 var plugin_react_1 = __importDefault(require('@vitejs/plugin-react'));
-var vite_plugin_markdown_1 = require('vite-plugin-markdown');
+var vite_react_md_1 = __importDefault(require('@xnate-plugin/vite-react-md'));
 var vite_plugin_html_1 = require('vite-plugin-html');
+console.log((0, vite_react_md_1.default)({}), 'md');
 var constant_1 = require('../shared/constant');
 var getDevConfig = function (xnateConfig) {
   var defaultLanguage = (0, lodash_1.get)(xnateConfig, 'defaultLanguage');
@@ -31,9 +32,7 @@ var getDevConfig = function (xnateConfig) {
     publicDir: constant_1.SITE_PUBLIC_PATH,
     plugins: [
       (0, plugin_react_1.default)(),
-      (0, vite_plugin_markdown_1.plugin)({
-        mode: [vite_plugin_markdown_1.Mode.HTML, vite_plugin_markdown_1.Mode.TOC, vite_plugin_markdown_1.Mode.REACT],
-      }),
+      (0, vite_react_md_1.default)({}),
       (0, vite_plugin_html_1.createHtmlPlugin)({
         inject: {
           data: {

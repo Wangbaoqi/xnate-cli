@@ -1,0 +1,33 @@
+
+
+.xnate {
+
+
+  &-site {
+    min-width: 1200px;
+    padding: 60px 0 0;
+
+    &-content {
+      display: flex;
+      background: var(--site-bg-color);
+      margin-left: 240px;
+      min-height: calc(100vh - 60px);
+    }
+
+    &-doc-container {
+      flex: 1 0 0;
+      min-width: 500px;
+      padding: 0 25px;
+      overflow-x: hidden;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+    }
+
+    &-doc {
+      
+    }
+  }
+}

@@ -200,8 +200,8 @@ function devUi() {
     return __generator(this, function (_a) {
       switch (_a.label) {
         case 0:
-          process.env.NODE_ENV === 'development';
-          console.log(constant_2.SRC_DIR, 'SRC_DIR');
+          process.env.NODE_ENV = 'development';
+          process.env.DEBUG = 'true';
           (0, fs_extra_1.ensureDirSync)(constant_2.SRC_DIR);
           return [4 /*yield*/, startServer()];
         case 1:
