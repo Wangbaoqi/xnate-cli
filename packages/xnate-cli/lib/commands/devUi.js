@@ -176,6 +176,7 @@ function startServer(force) {
           xnateConfig = (0, xnate_config_1.resolveXnateConfig)();
           viteDevConfig = (0, vite_config_1.getDevConfig)(xnateConfig);
           inlineConfig = (0, lodash_1.merge)(viteDevConfig, force ? { server: true } : {});
+          console.log(inlineConfig, 'inlineConfig');
           return [4 /*yield*/, (0, vite_1.createServer)(inlineConfig)];
         case 6:
           server = _c.sent();
