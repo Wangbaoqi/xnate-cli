@@ -1,0 +1,26 @@
+export default [
+  {
+    path: '/zh-CN/guide/intro',
+    // @ts-ignore
+    component: () =>
+      import('/Users/wangbaoqi/personal/xnate-cli/xnate-cli/packages/xnate-ui/docs/guide/intro.zh-CN.md'),
+  },
+  {
+    path: '/zh-CN/guide/usage',
+    // @ts-ignore
+    component: () =>
+      import('/Users/wangbaoqi/personal/xnate-cli/xnate-cli/packages/xnate-ui/docs/guide/usage.zh-CN.md'),
+  },
+  {
+    path: '/zh-CN/hooks/theme',
+    // @ts-ignore
+    component: () =>
+      import('/Users/wangbaoqi/personal/xnate-cli/xnate-cli/packages/xnate-ui/docs/hooks/theme.zh-CN.md'),
+  },
+  {
+    path: '/zh-CN/components/button',
+    // @ts-ignore
+    component: () =>
+      import('/Users/wangbaoqi/personal/xnate-cli/xnate-cli/packages/xnate-ui/src/components/button/docs/zh-CN.md'),
+  },
+]

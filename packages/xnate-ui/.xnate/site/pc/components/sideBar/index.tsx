@@ -65,7 +65,7 @@ const AppSideBar = (props: ISidebar) => {
   const menu = navName
 
   const toComDoc = (path: To | undefined) => {
-    path && navigate(`/components/${path}`)
+    path && navigate(`/zh-CN/components/${path}`)
   }
   return (
     <div className="xnate-site-sidebar">

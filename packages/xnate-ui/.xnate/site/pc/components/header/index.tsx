@@ -4,23 +4,20 @@ import './index.scss'
 
 import { Link } from 'react-router-dom'
 import clsx from 'clsx'
+import { type } from 'os'
 
-interface IHeader {
-  navName: string
+type navType = {
+  text?: string
+  path?: string
+  index?: boolean
 }
-const navList = [
-  {
-    text: '文档',
-    path: '/guides/intro',
-  },
-  {
-    text: '组件',
-    path: '/components/button',
-  },
-]
+interface IHeader {
+  navName?: string
+  navList?: navType[]
+}
 
 const AppHeader = (props: IHeader) => {
-  const { navName } = props
+  const { navName, navList = [] } = props
 
   return (
     <div className="xnate-site-header">
@@ -36,9 +33,13 @@ const AppHeader = (props: IHeader) => {
             const headCls = clsx('xnate-site-header__nav-item', { 'xnate-site-header__nav-item--active': active })
             return (
               <span key={i}>
-                <Link className={headCls} to={n.path}>
-                  {n.text}
-                </Link>
+                {n.path ? (
+                  <Link className={headCls} to={n.path}>
+                    {n.text}
+                  </Link>
+                ) : (
+                  n.text
+                )}
               </span>
             )
           })}
