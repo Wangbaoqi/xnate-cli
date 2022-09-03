@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, NavLink, Routes } from 'react-router-dom';
 
-import routesConfig from '../pc.routes';
+import routesConfig from '@pc-routes';
 
 const RouteView = () => {
   return (

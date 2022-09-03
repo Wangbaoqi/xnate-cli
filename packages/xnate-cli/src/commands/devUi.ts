@@ -28,8 +28,6 @@ async function startServer(force: boolean = true) {
   const viteDevConfig = getDevConfig(xnateConfig);
   const inlineConfig = merge(viteDevConfig, force ? { server: true } : {});
 
-  console.log(inlineConfig, 'inlineConfig');
-
   server = await createServer(inlineConfig);
   await server.listen();
   server.printUrls();

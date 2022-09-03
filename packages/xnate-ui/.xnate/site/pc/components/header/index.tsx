@@ -1,10 +1,8 @@
 import React from 'react'
-
-import './index.scss'
-
 import { Link } from 'react-router-dom'
 import clsx from 'clsx'
-import { type } from 'os'
+import config from '@config'
+import './index.scss'
 
 type navType = {
   text?: string
@@ -15,6 +13,8 @@ interface IHeader {
   navName?: string
   navList?: navType[]
 }
+
+console.log(config, 'config header')
 
 const AppHeader = (props: IHeader) => {
   const { navName, navList = [] } = props

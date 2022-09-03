@@ -144,13 +144,42 @@ var __read =
     }
     return ar;
   };
+var __spreadArray =
+  (this && this.__spreadArray) ||
+  function (to, from, pack) {
+    if (pack || arguments.length === 2)
+      for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+          if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+          ar[i] = from[i];
+        }
+      }
+    return to.concat(ar || Array.prototype.slice.call(from));
+  };
 Object.defineProperty(exports, '__esModule', { value: true });
 exports.compileSite = void 0;
 var constant_1 = require('./../shared/constant');
 var fs_extra_1 = require('fs-extra');
-var xnate_config_js_1 = require('../config/xnate.config.js');
-var constant_js_1 = require('../shared/constant.js');
+var xnate_config_1 = require('../config/xnate.config');
+var constant_2 = require('../shared/constant');
 var fs_1 = require('../shared/fs');
+var ROOT_DOCS_RE = /\/docs\/([-\w]+)\/([-\w]+).([-\w]+)\.md/;
+var COMPONENT_DOCS_RE = /\/([-\w]+)\/docs\/([-\w]+)\.md/;
+var getRootDocPath = function (path) {
+  var _a;
+  var _b = __read((_a = path.match(ROOT_DOCS_RE)) !== null && _a !== void 0 ? _a : [], 4),
+    type = _b[1],
+    routePath = _b[2],
+    language = _b[3];
+  return '/'.concat(language, '/').concat(type, '/').concat(routePath);
+};
+var getComponentsDocPath = function (path) {
+  var _a;
+  var _b = __read((_a = path.match(COMPONENT_DOCS_RE)) !== null && _a !== void 0 ? _a : [], 3),
+    routePath = _b[1],
+    language = _b[2];
+  return '/'.concat(language, '/components/').concat(routePath);
+};
 // const compileMobileSiteRoutes = () => {
 // }
 var getComponentsDocs = function () {
@@ -166,28 +195,43 @@ var getComponentsDocs = function () {
 var getRootDocs = function () {
   return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
-      return [2 /*return*/, (0, fs_1.glob)(''.concat(constant_1.ROOT_DOCS_DIR, '/*.md'))];
+      return [2 /*return*/, (0, fs_1.glob)(''.concat(constant_1.ROOT_DOCS_DIR, '/**/*.md'))];
     });
   });
 };
 var compilePcSiteRoutes = function () {
   return __awaiter(void 0, void 0, void 0, function () {
-    var _a, componentsDocs, rootDoc;
+    var _a, componentsDocs, rootDoc, rootDocsRoutes, componentDocsRoutes, source;
     return __generator(this, function (_b) {
       switch (_b.label) {
         case 0:
           return [4 /*yield*/, Promise.all([getComponentsDocs(), getRootDocs()])];
         case 1:
           (_a = __read.apply(void 0, [_b.sent(), 2])), (componentsDocs = _a[0]), (rootDoc = _a[1]);
+          rootDocsRoutes = rootDoc.map(function (doc) {
+            return "\n      {\n        path: '"
+              .concat(getRootDocPath(doc), "',\n        // @ts-ignore\n        component: () => import('")
+              .concat(doc, "')\n      }\n    ");
+          });
+          componentDocsRoutes = componentsDocs.map(function (doc) {
+            return "\n      {\n        path: '"
+              .concat(getComponentsDocPath(doc), "',\n        // @ts-ignore\n        component: () => import('")
+              .concat(doc, "')\n      }\n    ");
+          });
+          source = 'export default [    '
+            .concat(__spreadArray([], __read(rootDocsRoutes), false), ',\n    ')
+            .concat(__spreadArray([], __read(componentDocsRoutes), false), '\n  ]');
+          (0, fs_1.outputFileSyncOnChange)(constant_2.SITE_PC_ROUTES, source);
           console.log(componentsDocs, 'componentsDocs');
           console.log(rootDoc, 'rootDoc');
+          console.log(source, 'source');
           return [2 /*return*/];
       }
     });
   });
 };
 var compileSiteSource = function () {
-  return (0, fs_extra_1.copy)(constant_js_1.SITE, constant_js_1.SITE_DIR);
+  return (0, fs_extra_1.copy)(constant_2.SITE, constant_2.SITE_DIR);
 };
 var compileSite = function () {
   return __awaiter(this, void 0, void 0, function () {
@@ -195,7 +239,7 @@ var compileSite = function () {
       switch (_a.label) {
         case 0:
           // resolve xnate.config
-          (0, xnate_config_js_1.resolveXnateConfig)(true);
+          (0, xnate_config_1.resolveXnateConfig)(true);
           return [4 /*yield*/, Promise.all([compileSiteSource(), compilePcSiteRoutes()])];
         case 1:
           _a.sent();

@@ -1,26 +1,30 @@
 import React from 'react';
-
-import './index.scss';
-
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
+import config from '@config';
+import { get } from 'lodash-es';
+import './index.scss';
 
+type navType = {
+  text?: string;
+  path?: string;
+  index?: boolean;
+};
 interface IHeader {
-  navName: string;
+  navName?: string;
+  navList?: navType[];
 }
-const navList = [
-  {
-    text: '文档',
-    path: '/guides/intro',
-  },
-  {
-    text: '组件',
-    path: '/components/button',
-  },
-];
+
+console.log(config, 'config header');
 
 const AppHeader = (props: IHeader) => {
-  const { navName } = props;
+  const { navName, navList = [] } = props;
+  const title = get(config, 'title');
+  const logo = get(config, 'logo');
+  const themeKey = get(config, 'themeKey');
+  const language = get(config, 'pc.header.i18n');
+  const github = get(config, 'pc.header.github');
+  const darkMode = get(config, 'pc.header.darkMode');
 
   return (
     <div className="xnate-site-header">
@@ -36,9 +40,13 @@ const AppHeader = (props: IHeader) => {
             const headCls = clsx('xnate-site-header__nav-item', { 'xnate-site-header__nav-item--active': active });
             return (
               <span key={i}>
-                <Link className={headCls} to={n.path}>
-                  {n.text}
-                </Link>
+                {n.path ? (
+                  <Link className={headCls} to={n.path}>
+                    {n.text}
+                  </Link>
+                ) : (
+                  n.text
+                )}
               </span>
             );
           })}
