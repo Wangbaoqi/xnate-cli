@@ -5,7 +5,7 @@ module.exports = {
   host: 'localhost',
   port: 8080,
   title: 'XnateDesign',
-  themesKey: 'Xnate_THEMES',
+  themesKey: 'XNATE_THEMES',
   logo: 'https://varlet-varletjs.vercel.app/varlet_icon.png',
   defaultLanguage: 'zh-CN',
   highlight: {

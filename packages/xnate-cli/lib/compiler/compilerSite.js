@@ -156,15 +156,23 @@ var __spreadArray =
       }
     return to.concat(ar || Array.prototype.slice.call(from));
   };
+var __importDefault =
+  (this && this.__importDefault) ||
+  function (mod) {
+    return mod && mod.__esModule ? mod : { default: mod };
+  };
 Object.defineProperty(exports, '__esModule', { value: true });
-exports.compileSite = void 0;
+exports.compileSite = exports.getRootFilePath = exports.getRootRoutePath = void 0;
 var constant_1 = require('./../shared/constant');
 var fs_extra_1 = require('fs-extra');
 var xnate_config_1 = require('../config/xnate.config');
 var constant_2 = require('../shared/constant');
 var fs_1 = require('../shared/fs');
+var lodash_1 = require('lodash');
+var slash_1 = __importDefault(require('slash'));
 var ROOT_DOCS_RE = /\/docs\/([-\w]+)\/([-\w]+).([-\w]+)\.md/;
 var COMPONENT_DOCS_RE = /\/([-\w]+)\/docs\/([-\w]+)\.md/;
+var ROOT_LOCALE_RE = /\/pages\/([-\w]+)\/locale\/([-\w]+)\.ts/;
 var getRootDocPath = function (path) {
   var _a;
   var _b = __read((_a = path.match(ROOT_DOCS_RE)) !== null && _a !== void 0 ? _a : [], 4),
@@ -180,6 +188,18 @@ var getComponentsDocPath = function (path) {
     language = _b[2];
   return '/'.concat(language, '/components/').concat(routePath);
 };
+var getRootRoutePath = function (rootLocalePath) {
+  var _a;
+  var _b = __read((_a = rootLocalePath.match(ROOT_LOCALE_RE)) !== null && _a !== void 0 ? _a : [], 3),
+    routePath = _b[1],
+    language = _b[2];
+  return '/'.concat(language, '/').concat(routePath);
+};
+exports.getRootRoutePath = getRootRoutePath;
+var getRootFilePath = function (rootLocalePath) {
+  return rootLocalePath.replace(/locale\/.+/, constant_1.DIR_INDEX);
+};
+exports.getRootFilePath = getRootFilePath;
 // const compileMobileSiteRoutes = () => {
 // }
 var getComponentsDocs = function () {
@@ -199,32 +219,116 @@ var getRootDocs = function () {
     });
   });
 };
+var getRootLocales = function () {
+  return __awaiter(void 0, void 0, void 0, function () {
+    var defaultLanguage, userPages, baseLocales, userLocales, map;
+    return __generator(this, function (_a) {
+      switch (_a.label) {
+        case 0:
+          defaultLanguage = (0, lodash_1.get)((0, xnate_config_1.resolveXnateConfig)(), 'defaultLanguage');
+          return [4 /*yield*/, (0, fs_1.glob)(''.concat(constant_1.ROOT_PAGES_DIR, '/*'))];
+        case 1:
+          userPages = _a.sent();
+          return [
+            4 /*yield*/,
+            (0, fs_1.glob)(''.concat(constant_2.SITE, '/pc/pages/**/').concat(constant_1.LOCALE_DIR_NAME, '/*.ts')),
+          ];
+        case 2:
+          baseLocales = _a.sent();
+          return [
+            4 /*yield*/,
+            userPages.reduce(function (userLocales, page) {
+              return __awaiter(void 0, void 0, void 0, function () {
+                var locales;
+                var _a;
+                return __generator(this, function (_b) {
+                  switch (_b.label) {
+                    case 0:
+                      if (!(0, fs_1.isDir)(page)) return [3 /*break*/, 3];
+                      return [
+                        4 /*yield*/,
+                        (0, fs_1.glob)(''.concat(page, '/').concat(constant_1.LOCALE_DIR_NAME, '/*.ts')),
+                      ];
+                    case 1:
+                      locales = _b.sent();
+                      if (!locales.length)
+                        locales.push(
+                          ''.concat(page, '/').concat(constant_1.LOCALE_DIR_NAME, '/').concat(defaultLanguage, '.ts'),
+                        );
+                      return [4 /*yield*/, userLocales];
+                    case 2:
+                      (_a = _b.sent()).push.apply(_a, __spreadArray([], __read(locales), false));
+                      _b.label = 3;
+                    case 3:
+                      return [2 /*return*/, userLocales];
+                  }
+                });
+              });
+            }, Promise.resolve([])),
+          ];
+        case 3:
+          userLocales = _a.sent();
+          map = new Map();
+          baseLocales.forEach(function (locale) {
+            var _a;
+            var _b = __read((_a = locale.match(ROOT_LOCALE_RE)) !== null && _a !== void 0 ? _a : [], 3),
+              routePath = _b[1],
+              language = _b[2];
+            map.set(
+              routePath + language,
+              (0, slash_1.default)(
+                ''.concat(constant_1.SITE_PC_DIR, '/pages/').concat(routePath, '/locale/').concat(language, '.ts'),
+              ),
+            );
+          });
+          userLocales.forEach(function (locale) {
+            var _a;
+            var _b = __read((_a = locale.match(ROOT_LOCALE_RE)) !== null && _a !== void 0 ? _a : [], 3),
+              routePath = _b[1],
+              language = _b[2];
+            map.set(routePath + language, locale);
+          });
+          return [2 /*return*/, Promise.resolve(Array.from(map.values()))];
+      }
+    });
+  });
+};
 var compilePcSiteRoutes = function () {
   return __awaiter(void 0, void 0, void 0, function () {
-    var _a, componentsDocs, rootDoc, rootDocsRoutes, componentDocsRoutes, source;
+    var _a, componentsDocs, rootDoc, rootLocales, rootPagesRoutes, rootDocsRoutes, componentDocsRoutes, source;
     return __generator(this, function (_b) {
       switch (_b.label) {
         case 0:
-          return [4 /*yield*/, Promise.all([getComponentsDocs(), getRootDocs()])];
+          return [4 /*yield*/, Promise.all([getComponentsDocs(), getRootDocs(), getRootLocales()])];
         case 1:
-          (_a = __read.apply(void 0, [_b.sent(), 2])), (componentsDocs = _a[0]), (rootDoc = _a[1]);
+          (_a = __read.apply(void 0, [_b.sent(), 3])),
+            (componentsDocs = _a[0]),
+            (rootDoc = _a[1]),
+            (rootLocales = _a[2]);
+          rootPagesRoutes = rootLocales.map(function (rootLocale) {
+            return "\n  {\n    path: '"
+              .concat((0, exports.getRootRoutePath)(rootLocale), "',\n    // @ts-ignore\n    component: () => import('")
+              .concat((0, exports.getRootFilePath)(rootLocale), "')\n  }");
+          });
           rootDocsRoutes = rootDoc.map(function (doc) {
-            return "\n      {\n        path: '"
-              .concat(getRootDocPath(doc), "',\n        // @ts-ignore\n        component: () => import('")
-              .concat(doc, "')\n      }\n    ");
+            return "\n  {\n    path: '"
+              .concat(getRootDocPath(doc), "',\n    // @ts-ignore\n    component: () => import('")
+              .concat(doc, "')\n  }");
           });
           componentDocsRoutes = componentsDocs.map(function (doc) {
-            return "\n      {\n        path: '"
-              .concat(getComponentsDocPath(doc), "',\n        // @ts-ignore\n        component: () => import('")
-              .concat(doc, "')\n      }\n    ");
+            return "\n  {\n    path: '"
+              .concat(getComponentsDocPath(doc), "',\n    // @ts-ignore\n    component: () => import('")
+              .concat(doc, "')\n  }");
           });
-          source = 'export default [    '
-            .concat(__spreadArray([], __read(rootDocsRoutes), false), ',\n    ')
-            .concat(__spreadArray([], __read(componentDocsRoutes), false), '\n  ]');
+          source = 'export default [    '.concat(
+            __spreadArray(
+              __spreadArray(__spreadArray([], __read(rootPagesRoutes), false), __read(rootDocsRoutes), false),
+              __read(componentDocsRoutes),
+              false,
+            ),
+            ',\n]',
+          );
           (0, fs_1.outputFileSyncOnChange)(constant_2.SITE_PC_ROUTES, source);
-          console.log(componentsDocs, 'componentsDocs');
-          console.log(rootDoc, 'rootDoc');
-          console.log(source, 'source');
           return [2 /*return*/];
       }
     });

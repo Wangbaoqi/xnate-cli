@@ -4,7 +4,7 @@
   "host": "localhost",
   "port": 8080,
   "title": "Basic UI",
-  "themesKey": "Xnate_THEMES",
+  "themesKey": "XNATE_THEMES",
   "logo": "./logo.svg",
   "defaultLanguage": "zh-CN",
   "highlight": {

@@ -1,10 +1,28 @@
 .vscode
-node_modules
+.DS_Store
 .idea
+*.log
 
-package/**/node_modules
-package/**/package-lock.json
+node_modules
+package-lock.json
 
+packages/**/node_modules
+packages/**/package-lock.json
 website/**/node_modules
 website/**/package-lock.json
-lerna-debug.log
+
+
+packages/xnate-cli/lib/commands
+packages/xnate-cli/lib/complier
+packages/xnate-cli/lib/config
+packages/xnate-cli/lib/create
+packages/xnate-cli/lib/shared
+packages/xnate-cli/lib/util
+packages/xnate-cli/lib/cli.d.ts
+
+
+packages/xnate-cli-shared/lib/
+packages/xnate-cli-shared/es/
+
+packages/xnate-icons/es
+packages/xnate-icons/lib

@@ -19,7 +19,7 @@ export declare const STYLE_DIR_NAME = 'style';
 export declare const EXAMPLE_DIR_NAME = 'example';
 export declare const LOCALE_DIR_NAME = 'locale';
 export declare const DOCS_DIR_NAME = 'docs';
-export declare const DIR_INDEX = 'index.vue';
+export declare const DIR_INDEX = 'index.tsx';
 export declare const TESTS_DIR_NAME = '__tests__';
 export declare const GENERATORS_DIR: any;
 export declare const UI_PACKAGE_JSON: any;
