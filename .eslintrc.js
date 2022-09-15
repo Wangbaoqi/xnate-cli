@@ -17,5 +17,7 @@ module.exports = {
     'no-sparse-arrays': 'warn',
     'no-fallthrough': 'warn',
     'no-unsafe-finally': 'warn',
+    'no-redeclare': 'warn',
+    'no-func-assign': 'warn',
   },
 };

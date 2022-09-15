@@ -5,12 +5,16 @@
   "author": "Nate Wang <wangbaoqi8839@gmail.com>",
   "homepage": "https://github.com/Wangbaoqi/xnate-cli#readme",
   "license": "ISC",
-  "main": "lib/xnate-icons.js",
+  "main": "./lib/index.js",
+  "module": "./es/index.js",
+  "types": "./es/index.d.ts",
+  "typings": "./es/index.d.ts",
   "directories": {
     "lib": "lib",
     "test": "__tests__"
   },
   "files": [
+    "es",
     "lib"
   ],
   "repository": {
@@ -18,12 +22,26 @@
     "url": "git+https://github.com/Wangbaoqi/xnate-cli.git"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "build": "gulp"
   },
   "bugs": {
     "url": "https://github.com/Wangbaoqi/xnate-cli/issues"
   },
-  "dependencies": {
-    "chalk": "^4.1.2"
+  "devDependencies": {
+    "@babel/cli": "^7.18.10",
+    "@babel/core": "^7.19.1",
+    "@babel/plugin-transform-modules-commonjs": "^7.18.6",
+    "@types/react": "^18.0.20",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "typescript": "^4.8.3"
+  },
+  "peerDependencies": {
+    "react": ">=16.14.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }
