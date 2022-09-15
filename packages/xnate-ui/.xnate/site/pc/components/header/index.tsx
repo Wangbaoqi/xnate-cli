@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import clsx from 'clsx'
 import config from '@config'
+import { get } from 'lodash-es'
 import './index.scss'
 
 type navType = {
@@ -18,6 +19,12 @@ console.log(config, 'config header')
 
 const AppHeader = (props: IHeader) => {
   const { navName, navList = [] } = props
+  const title = get(config, 'title')
+  const logo = get(config, 'logo')
+  const themeKey = get(config, 'themeKey')
+  const language = get(config, 'pc.header.i18n')
+  const github = get(config, 'pc.header.github')
+  const darkMode = get(config, 'pc.header.darkMode')
 
   return (
     <div className="xnate-site-header">
