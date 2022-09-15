@@ -19,7 +19,8 @@ module.exports = {
   },
   useMobile: false,
   pc: {
-    menu: [],
+    menu: {},
+    navs: [],
     redirect: '/index',
     title: {
       'zh-CN': '面向 Vue3 的 Material 风格移动端组件库',

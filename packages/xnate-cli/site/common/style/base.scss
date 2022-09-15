@@ -1,24 +1,6 @@
 
-$site-font-size-xs: 10px;
-$site-font-size-sm: 12px;
-$site-font-size-md: 14px;
-$site-font-size-lg: 16px;
+@import './root.scss';
 
-
-
-
-:root {
-  --site-bg-color: #121212;
-  --site-bar-bg: #1e1e1e;
-  --site-border-color: #333;
-  --site-shadow-color: #121212;
-  --site-text-color: #fff;
-  --site-side-bar-active-bg: #4a7afe1a;
-  --site-side-bar-color: #4a7afe;
-
-
-  --site-font-size-md: $site-font-size-md;
-}
 
 /**
  * 1. Correct the line height in all browsers.

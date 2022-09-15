@@ -13,16 +13,18 @@ type navType = {
 interface IHeader {
   navName?: string
   navList?: navType[]
+  language?: string
 }
 
 console.log(config, 'config header')
 
 const AppHeader = (props: IHeader) => {
-  const { navName, navList = [] } = props
+  const { navName, navList = [], language = '' } = props
+
   const title = get(config, 'title')
   const logo = get(config, 'logo')
   const themeKey = get(config, 'themeKey')
-  const language = get(config, 'pc.header.i18n')
+  const languages = get(config, 'pc.header.i18n')
   const github = get(config, 'pc.header.github')
   const darkMode = get(config, 'pc.header.darkMode')
 
@@ -30,7 +32,7 @@ const AppHeader = (props: IHeader) => {
     <div className="xnate-site-header">
       <div className="xnate-site-header__lead">
         <div className="xnate-site-header__left">
-          <div className="xnate-site-header__title">Xnate Design</div>
+          <div className="xnate-site-header__title">{title}</div>
         </div>
         <nav className="xnate-site-header__nav">
           {navList.map((n, i) => {
@@ -41,11 +43,11 @@ const AppHeader = (props: IHeader) => {
             return (
               <span key={i}>
                 {n.path ? (
-                  <Link className={headCls} to={n.path}>
-                    {n.text}
+                  <Link className={headCls} to={`/${language}${n.path}`}>
+                    {n.text[language]}
                   </Link>
                 ) : (
-                  n.text
+                  n.text[language]
                 )}
               </span>
             )

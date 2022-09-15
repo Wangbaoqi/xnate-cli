@@ -3,6 +3,7 @@ import { AppHeader, AppSideBar, AppMobile } from './components/index';
 import { useParams, useLocation } from 'react-router-dom';
 
 import config from '@config';
+import { getPCLocationInfo } from './utils';
 import './App.scss';
 
 interface ILayoutProps {
@@ -12,7 +13,10 @@ interface ILayoutProps {
 const Layout = (props: ILayoutProps) => {
   const params = useParams();
   const { pathname } = useLocation();
-  console.log(params, 'params');
+  const { language = '', navName } = getPCLocationInfo();
+
+  const isHome = navName === 'home';
+  console.log(language, 'language');
   console.log(config, 'config');
 
   const {
@@ -21,15 +25,18 @@ const Layout = (props: ILayoutProps) => {
 
   return (
     <div className="xnate-site">
-      <AppHeader navList={navs} navName={pathname} />
+      <AppHeader language={language} navList={navs} navName={pathname} />
+      {isHome ? (
+        <div className="xnate-site-home"></div>
+      ) : (
+        <div className="xnate-site-content">
+          <AppSideBar navName={pathname} />
 
-      <div className="xnate-site-content">
-        <AppSideBar navName={pathname} menuName={params['*']} />
+          <div className="xnate-site-doc-container">{props.children}</div>
 
-        <div className="xnate-site-doc-container">{props.children}</div>
-
-        {/* <AppMobile /> */}
-      </div>
+          {/* <AppMobile /> */}
+        </div>
+      )}
     </div>
   );
 };

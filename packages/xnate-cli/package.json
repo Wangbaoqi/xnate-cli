@@ -34,8 +34,10 @@
   },
   "dependencies": {
     "@vitejs/plugin-react": "^2.0.1",
+    "@xnate-design/icons": "file:../xnate-icons",
     "@xnate-plugin/vite-react-md": "file:../xnate-plugin-vite-md",
     "@xnate/cli-shared-utils": "file:../xnate-cli-shared",
+    "ahooks": "^3.7.1",
     "chokidar": "^3.5.3",
     "commander": "^9.4.0",
     "dotenv": "^16.0.1",

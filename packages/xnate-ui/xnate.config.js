@@ -69,43 +69,61 @@ module.exports = {
     },
     navs: [
       {
-        text: 'Home',
-        path: '/',
+        text: {
+          'zh-CN': '首页',
+          'en-US': 'Home',
+        },
+        path: '/home',
         index: true,
       },
       {
-        text: 'Components',
+        text: {
+          'zh-CN': '文档',
+          'en-US': 'Guide',
+        },
+        path: '/guide',
+        index: true,
+      },
+      {
+        text: {
+          'zh-CN': '组件',
+          'en-US': 'Components',
+        },
         path: '/components',
       },
     ],
-    menu: [
-      {
-        text: {
-          'zh-CN': '开发指南',
+    menu: {
+      guide: [
+        {
+          text: {
+            'zh-CN': '介绍',
+            'en-US': 'intro',
+          },
+          path: '/guide/intro',
         },
-        type: 1,
-      },
-      {
-        text: {
-          'zh-CN': '基本介绍',
+        {
+          text: {
+            'zh-CN': '使用',
+            'en-US': 'usage',
+          },
+          path: '/guide/usage',
         },
-        doc: 'home',
-        type: 3,
-      },
-      {
-        text: {
-          'zh-CN': '基础组件',
+      ],
+      components: [
+        {
+          title: '基础组件',
+          children: [
+            {
+              text: {
+                'zh-CN': 'Button 按钮',
+                'en-US': 'Button',
+              },
+              path: '/components/button',
+            },
+          ],
         },
-        type: 1,
-      },
-      {
-        text: {
-          'zh-CN': 'Button 按钮',
-        },
-        doc: 'button',
-        type: 2,
-      },
-    ],
+      ],
+    },
   },
   mobile: {
     redirect: '/home',
