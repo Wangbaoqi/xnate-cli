@@ -13,5 +13,5 @@ export declare const getDevConfig: (xnateConfig: any) => {
     host: any;
   };
   publicDir: any;
-  plugins: (import('vite').Plugin | import('vite').PluginOption[])[];
+  plugins: import('vite').PluginOption[];
 };

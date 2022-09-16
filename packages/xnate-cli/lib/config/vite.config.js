@@ -10,7 +10,7 @@ var lodash_1 = require('lodash');
 var plugin_react_1 = __importDefault(require('@vitejs/plugin-react'));
 var vite_react_md_1 = __importDefault(require('@xnate-plugin/vite-react-md'));
 var vite_plugin_html_1 = require('vite-plugin-html');
-console.log((0, vite_react_md_1.default)({}), 'md');
+console.log(vite_react_md_1.default, 'md');
 var constant_1 = require('../shared/constant');
 var getDevConfig = function (xnateConfig) {
   var defaultLanguage = (0, lodash_1.get)(xnateConfig, 'defaultLanguage');

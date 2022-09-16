@@ -3,7 +3,7 @@ import frontmatter from 'front-matter';
 import * as esbuild from 'esbuild';
 import hljs from 'highlight.js';
 
-import type { Plugin, TransformResult } from 'vite';
+import type { PluginOption } from 'vite';
 
 const highlight = (str, lang, style) => {
   let link = '';
@@ -47,7 +47,7 @@ const markdownToReact = (code: string, options) => {
   };
 };
 
-const xnatePluginViteMd = (options): Plugin => {
+const plugin = (options): PluginOption => {
   return {
     name: 'xnate-plugin-vite-md',
     enforce: 'pre',
@@ -65,4 +65,4 @@ const xnatePluginViteMd = (options): Plugin => {
   };
 };
 
-export default xnatePluginViteMd;
+export default plugin;

@@ -4,7 +4,7 @@ import { plugin, Mode } from 'vite-plugin-markdown';
 import md from '@xnate-plugin/vite-react-md';
 import { createHtmlPlugin } from 'vite-plugin-html';
 
-console.log(md({}), 'md');
+console.log(md, 'md');
 
 import {
   SITE_DIR,

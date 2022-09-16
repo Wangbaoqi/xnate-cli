@@ -1,32 +1,39 @@
 {
   "name": "@xnate-plugin/vite-react-md",
-  "version": "0.0.0",
+  "version": "0.0.3",
   "description": "",
   "author": "Nate Wang <wangbaoqi8839@gmail.com>",
   "homepage": "https://github.com/Wangbaoqi/xnate-cli#readme",
   "license": "ISC",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "directories": {
-    "lib": "lib",
+    "lib": "dist",
     "test": "__tests__"
   },
   "files": [
-    "lib"
+    "dist"
   ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Wangbaoqi/xnate-cli.git"
   },
   "scripts": {
     "test": "node ./__tests__/xnate-plugin-vite-md.test.js",
-    "dev": "tsc --watch",
-    "build": "tsc -p './"
+    "dev": "tsup src/index.ts --format esm,cjs --watch",
+    "build": "tsup src/index.ts --format esm,cjs --dts"
   },
   "bugs": {
     "url": "https://github.com/Wangbaoqi/xnate-cli/issues"
   },
   "dependencies": {
+    "esbuild": "^0.15.7",
+    "front-matter": "^4.0.2",
     "highlight.js": "^11.6.0",
     "markdown-it": "^13.0.1"
   },
@@ -36,6 +43,7 @@
   "devDependencies": {
     "@types/markdown-it": "^12.2.3",
     "@types/node": "^18.7.14",
+    "tsup": "^6.2.3",
     "typescript": "^4.8.2"
   }
 }

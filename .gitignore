@@ -24,5 +24,9 @@ packages/xnate-cli/lib/cli.d.ts
 packages/xnate-cli-shared/lib/
 packages/xnate-cli-shared/es/
 
+packages/xnate-ui/.xnate
+
 packages/xnate-icons/es
 packages/xnate-icons/lib
+
+packages/xnate-plugin-vite-md/dist
