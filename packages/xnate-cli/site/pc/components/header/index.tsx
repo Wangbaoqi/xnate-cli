@@ -3,10 +3,16 @@ import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import config from '@config';
 import { get } from 'lodash-es';
+import ThemeAction from './action/themeAction';
 import './index.scss';
+import GitHub from '@xnate-design/icons/es/github';
+
+type navItem = {
+  [m: string]: string;
+};
 
 type navType = {
-  text?: string;
+  text?: navItem;
   path?: string;
   index?: boolean;
 };
@@ -15,8 +21,6 @@ interface IHeader {
   navList?: navType[];
   language?: string;
 }
-
-console.log(config, 'config header');
 
 const AppHeader = (props: IHeader) => {
   const { navName, navList = [], language = '' } = props;
@@ -36,20 +40,19 @@ const AppHeader = (props: IHeader) => {
         </div>
         <nav className="xnate-site-header__nav">
           {navList.map((n, i) => {
-            const active = n.path === navName;
-            console.log(active);
-
+            const active = n.path === `/${navName}`;
             const headCls = clsx('xnate-site-header__nav-item', { 'xnate-site-header__nav-item--active': active });
+            const item = n.text || {};
             return (
-              <span key={i}>
+              <React.Fragment key={i}>
                 {n.path ? (
                   <Link className={headCls} to={`/${language}${n.path}`}>
-                    {n.text[language]}
+                    {item[language]}
                   </Link>
                 ) : (
-                  n.text[language]
+                  item[language]
                 )}
-              </span>
+              </React.Fragment>
             );
           })}
         </nav>
@@ -57,8 +60,10 @@ const AppHeader = (props: IHeader) => {
       <div className="xnate-site-header__tail">
         <div className="xnate-site-header__versions"></div>
         <a className="xnate-site-header__links"></a>
-        <a className="xnate-site-header__links"></a>
-        <div className="xnate-site-header__theme"></div>
+        <a className="xnate-site-header__links" href={github} target="_blank">
+          <GitHub fontSize="20px" />
+        </a>
+        <ThemeAction />
         <div className="xnate-site-header__language"></div>
       </div>
     </div>
