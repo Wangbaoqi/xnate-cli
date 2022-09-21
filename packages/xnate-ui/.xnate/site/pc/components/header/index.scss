@@ -11,10 +11,9 @@
   padding: 0 30px;
   user-select: none;
   z-index: 9;
-  background: var(--site-bar-bg);
-  border-bottom: 1px solid var(--site-border-color);
+  backdrop-filter: saturate(50%) blur(8px);
   box-sizing: border-box;
-
+  background-color: var(--site-bg-color);
   &__lead {
     display: flex;
     align-items: center;
@@ -31,27 +30,49 @@
 
   &__title {
     font-size: 22px;
+    color: var(--site-text-color);
   }
 
   &__nav {
     display: flex;
     align-items: center;
     margin-left: 60px;
-    gap: 20px;
-    
+    gap: 25px;
+    height: inherit;
     &-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: inherit;
+      font-weight: 500;
       color: var(--site-text-color);
       font-size: 15px;
       &--active {
         color: var(--site-side-bar-color);
       }
+      &:hover {
+        color: var(--site-side-bar-color);
+      }
     }
-
-    &-link {
-    }
+    
   }
 
   &__tail {
+    display: flex;
+    align-items: center;
+  }
 
+  &__theme,
+  &__links {
+    width: 42px;
+    height: 42px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--site-text-color);
+    &:hover {
+      color: var(--site-side-bar-color);
+    }
   }
 }

@@ -1,93 +1,59 @@
 import React from 'react'
-import { Link, To } from 'react-router-dom'
+import { useNavigate, useLocation, Link, To } from 'react-router-dom'
 
 import { Cell } from '../../../components/index'
 
 import clsx from 'clsx'
 import './index.scss'
-import { MenuType } from '../../utils'
 
-import { useNavigate } from 'react-router-dom'
-
+interface IMenuItem {
+  [m: string]: string
+}
 interface IMenu {
-  text?: string
+  title?: string
+  children?: IMenu[]
+  text?: IMenuItem
   path?: string
-  type?: number
 }
 
 interface ISidebar {
+  language?: string
   menuName?: string
   navName?: string
+  menu?: IMenu[]
 }
-const guideMenu = [
-  {
-    text: '开始',
-    path: '/guides/intro',
-  },
-  {
-    text: '按需引入',
-    path: '/guides/usage',
-  },
-  {
-    text: '主题',
-    path: '/guides/theme',
-  },
-]
-
-const componentsMenu: IMenu[] = [
-  {
-    text: '基础组件',
-    type: 1,
-  },
-  {
-    text: 'Button 按钮',
-    type: 2,
-    path: 'button',
-  },
-  {
-    text: 'Cell 单元格',
-    type: 2,
-    path: 'cell',
-  },
-  {
-    text: 'Icon 图标',
-    type: 2,
-    path: 'icon',
-  },
-]
 
 const AppSideBar = (props: ISidebar) => {
-  const { menuName, navName } = props
+  const { language = '', menuName, navName, menu = [] } = props
   const navigate = useNavigate()
+  const { pathname } = useLocation()
 
-  console.log(menuName, navName)
+  console.log(pathname, 'pathname')
 
-  const menu = navName
-
-  const toComDoc = (path: To | undefined) => {
-    path && navigate(`/zh-CN/components/${path}`)
+  const renderMenu = (item: IMenu, key: number) => {
+    const itemCls = clsx(
+      'xnate-site-sidebar__item',
+      { 'xnate-site-sidebar__title': item.title },
+      { 'xnate-site-sidebar__link': item.path },
+      { 'xnate-site-sidebar__item--title': item.title && item.children },
+      { 'xnate-site-sidebar__item--active': `/${language}${item.path}` === pathname }
+    )
+    const text = item.text || {}
+    return (
+      <React.Fragment key={key}>
+        {item.title && item.children ? <Cell className={itemCls}>{item.title}</Cell> : ''}
+        {item.children?.length ? (
+          item.children.map(renderMenu)
+        ) : (
+          <Link className={itemCls} to={`${language}${item.path}`}>
+            {text[language]}
+          </Link>
+        )}
+      </React.Fragment>
+    )
   }
-  return (
-    <div className="xnate-site-sidebar">
-      {componentsMenu.map((m, i) => {
-        const itemCls = clsx(
-          'xnate-site-sidebar__item',
-          { 'xnate-site-sidebar__title': m.type === MenuType.TITLE },
-          { 'xnate-site-sidebar__link': m.type !== MenuType.TITLE },
-          { 'xnate-site-sidebar__item--active': m.path === menuName }
-        )
-        return (
-          <Cell key={i} className={itemCls} changeRoute={() => toComDoc(m.path)}>
-            {m.type === MenuType.TITLE ? (
-              <span className="xnate-site-sidebar__item--title">{m.text}</span>
-            ) : (
-              <span>{m.text}</span>
-            )}
-          </Cell>
-        )
-      })}
-    </div>
-  )
+
+  return <div className="xnate-site-sidebar">{menu.map(renderMenu)}</div>
 }
 
 export default AppSideBar

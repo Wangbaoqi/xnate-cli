@@ -1,36 +1,51 @@
-import React, { ReactNode } from 'react'
+import React, { useEffect } from 'react'
 import { AppHeader, AppSideBar, AppMobile } from './components/index'
-import { useParams, useLocation } from 'react-router-dom'
+import { useParams, useLocation, Outlet, useNavigate } from 'react-router-dom'
 
 import config from '@config'
 import { getPCLocationInfo } from './utils'
 import './App.scss'
 
-interface ILayoutProps {
-  children?: ReactNode
+interface ILayout {
+  children?: React.ReactElement
 }
 
-const Layout = (props: ILayoutProps) => {
+const Layout = (props: ILayout) => {
   const params = useParams()
+  const navigate = useNavigate()
   const { pathname } = useLocation()
-  const { language = '', navName } = getPCLocationInfo()
-
-  const isHome = navName === 'home'
-  console.log(language, 'language')
-  console.log(config, 'config')
-
+  const { language = '', navName = '' } = getPCLocationInfo()
   const {
-    pc: { navs = [], menu = [] },
+    pc: { navs = [], menu = [], redirect = '' },
+    defaultLanguage = '',
   } = config
+  const isHome = navName === 'home'
 
+  const menuList = menu[navName] || []
+
+  console.log(props.children, 'menu')
+
+  useEffect(() => {
+    if (redirect && pathname === '/') {
+      navigate(`${defaultLanguage}${redirect}`)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (navName === 'guide' || navName === 'components') {
+      const fMenu = menuList[0] || {}
+      const pathRedirect = fMenu.path || (fMenu.children && fMenu.children[0].path)
+      navigate(`${language}${pathRedirect}`)
+    }
+  }, [navName])
   return (
     <div className="xnate-site">
-      <AppHeader language={language} navList={navs} navName={pathname} />
+      <AppHeader language={language} navList={navs} navName={navName} />
       {isHome ? (
-        <div className="xnate-site-home"></div>
+        <div className="xnate-site-home">{props.children}</div>
       ) : (
         <div className="xnate-site-content">
-          <AppSideBar navName={pathname} />
+          <AppSideBar language={language} navName={navName} menu={menuList} />
 
           <div className="xnate-site-doc-container">{props.children}</div>
 

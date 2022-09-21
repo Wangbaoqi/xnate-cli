@@ -1,13 +1,34 @@
 @import './var.scss';
 
 :root {
-  --site-bg-color: #121212;
-  --site-bar-bg: #1e1e1e;
+
+  --site-bg-color: #f7f8fa;
+  --site-bar-bg: #f7f8fa;
+  --site-border-color: rgba(0, 0, 0, 0.12);
+  --site-shadow-color: #eee;
+  --site-text-color: #000;
+  --site-text-color-secondary: #000;
+  --site-text-color-cate: #141414;
+  --site-side-bar-active-bg: #3a7afe1a;
+  --site-side-bar-color: #1d92e9;
+
+  --site-side-scroll-bg: rgba(179,229,255,.1)
+
+  --site-font-size-md: $site-font-size-md;
+}
+
+html[data-theme='dark'] {
+  --site-bg-color: #0e141b;
+  --site-bar-bg: #0e141b;
   --site-border-color: #333;
   --site-shadow-color: #121212;
   --site-text-color: #fff;
-  --site-side-bar-active-bg: #4a7afe1a;
-  --site-side-bar-color: #4a7afe;
+  --site-text-color-secondary: #c9d1d9;
+  --site-text-color-cate: #f3f3f3;
+  --site-side-bar-active-bg: #2b333b;
+  --site-side-bar-color: #149ecc;
+
+  --site-side-scroll-bg: rgba(179,229,255,.1)
 
   --site-font-size-md: $site-font-size-md;
 }
