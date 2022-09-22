@@ -34,9 +34,17 @@
   "dependencies": {
     "esbuild": "^0.15.7",
     "front-matter": "^4.0.2",
+    "github-slugger": "^1.4.0",
     "highlight.js": "^11.6.0",
     "markdown-it": "^13.0.1",
-    "mdx-bundler": "^9.0.1"
+    "mdast-util-to-string": "^3.1.0",
+    "mdx-bundler": "^9.0.1",
+    "rehype-autolink-headings": "^6.1.1",
+    "rehype-slug": "^5.0.1",
+    "remark-admonitions": "^1.2.1",
+    "remark-gfm": "^3.0.1",
+    "remark-toc": "^8.0.1",
+    "unist-util-visit": "^4.0.0"
   },
   "peerDependencies": {
     "vite": "^3.0.9"

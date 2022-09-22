@@ -2,6 +2,7 @@ import React from 'react';
 import Highlight, { defaultProps } from 'prism-react-renderer';
 import rangeParser from 'parse-numeric-range';
 import theme from '../../../../common/theme/codeTheme';
+import { Copy, Light } from '@xnate-design/icons';
 
 const calculateLinesToHighlight = (raw) => {
   const lineNumbers = rangeParser(raw);
@@ -12,7 +13,7 @@ const calculateLinesToHighlight = (raw) => {
   }
 };
 
-const copyToClipboard = (str) => {
+const copyToClipboard = (str: string) => {
   if (navigator.clipboard) {
     navigator.clipboard.writeText(str).then(
       function () {
@@ -37,41 +38,26 @@ const CodePre = (props) => {
   const highlights = calculateLinesToHighlight(light || '');
 
   return (
-    <div className="rounded-lg my-16 pl-3 pb-4 shadow-3xl bg-playground-bg md:-mx-3">
-      <div className="flex relative pb-4">
-        {language ? (
-          <div className="h-7 mx-1 -mt-7 px-2 text-tiny rounded-tl-md rounded-tr-md  bg-playground-bg uppercase  flex justify-center items-center">{`${language}`}</div>
-        ) : (
-          ''
-        )}
-        <div
-          className="flex justify-center items-center italic"
-          style={{
-            color: 'var(--fg-active)',
-          }}
-        >
-          {file && `${file}`}
+    <div className="xnate-site-md__code">
+      <div className="xnate-site-md__code-tab">
+        <div className="xnate-site-md__code-tab-left">{file && `${file}`}</div>
+        <div className="xnate-site-md__code-tab-right">
+          <span
+            className="xnate-site-md__code-tab-icon"
+            onClick={() => {
+              copyToClipboard(code);
+              setIsCopied(true);
+              setTimeout(() => setIsCopied(false), 1000);
+            }}
+          >
+            {isCopied ? '🎉 Copied!' : <Copy fontSize="22px" />}
+          </span>
         </div>
-        <button
-          className=" absolute right-5 top-4 hover:text-anchor-color py-2 px-3 border-none rounded-lg cursor-pointer text-sm font-SourceCode leading-4"
-          onClick={() => {
-            copyToClipboard(code);
-            setIsCopied(true);
-            setTimeout(() => setIsCopied(false), 1000);
-          }}
-        >
-          {isCopied ? '🎉 Copied!' : 'copy'}
-        </button>
       </div>
-      <div
-        className=" overflow-auto rounded-lg "
-        style={{
-          background: 'var(--bg-default)',
-        }}
-      >
+      <div className="xnate-site-md__code-box">
         <Highlight {...defaultProps} code={code} language={language} theme={theme}>
           {({ className, style, tokens, getLineProps, getTokenProps }) => (
-            <pre className="bg-transparent min-w-full text-pre font-SourceCode">
+            <pre className="xnate-site-md__code-box-pre font-source-code">
               {tokens.map((line, i) => (
                 <div
                   key={i}
@@ -79,9 +65,10 @@ const CodePre = (props) => {
                   style={{
                     background: highlights(i) ? '#00f5c426' : 'transparent',
                     display: 'block',
+                    lineHeight: '1.375',
                   }}
                 >
-                  <span className="inline-block mr-4 w-5 text-right">{i + 1}</span>
+                  <span className="xnate-site-md__code-box-number">{i + 1}</span>
                   {line.map((token, key) => (
                     <span key={key} {...getTokenProps({ token, key })} />
                   ))}

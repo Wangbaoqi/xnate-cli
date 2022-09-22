@@ -7,7 +7,8 @@
 
   &__box {
     padding: 25px 30px;
-    background: var(--site-side-bar-active-bg);
+    background: var(--site-secondary-bg);
+    color: var(--site-text-color);
     border-radius: 24px;
     margin: 0 auto;
 
@@ -65,9 +66,84 @@
     strong {
       margin: 0 12px;
       color: var(--site-strong-color);
+      font-weight: 500;
+    }
+
+    img {
+      width: 100%;
+      margin: 15px 0;
     }
   }
 
+  &__code {
+    position: relative;
+    border-radius: 8px;
+    margin: 30px 0;
+    font-size: 14px;
+    background: var(--site-pre-bg);
+    &:hover {
+      .xnate-site-md__code-tab {
+        display: flex;
+      }
+    }
+    &-tab {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      display: none;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 10px;
+      &-right {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      &-icon {
+        cursor: pointer;
+      }
+    }
+    
+    &-box {
+      overflow: auto;
+      border-radius: 8px;
+      padding-left: 12px;
+      &-pre {
+        background: transparent;
+      }
+      &-number {
+        display: inline-block;
+        margin-right: 10px;
+        width: 10px;
+        text-align: right;
+      }
+    }
+  }
+
+  &__table {
+    font-size: 14px;
+    margin-top: 20px;
+    width: 100%;
+
+    th,
+    td {
+      padding: 10px;
+      text-align: left;
+      &:first-child {
+        padding-left: 0;
+      }
+      &:last-child {
+        padding-right: 0;
+      }
+    }
+
+    th {
+      text-align: left;
+    }
+    td {
+      border-top: 1px solid var(--site-border-color);
+    }
+  }
 
 
 }

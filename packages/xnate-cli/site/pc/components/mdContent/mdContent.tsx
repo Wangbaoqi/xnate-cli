@@ -11,13 +11,9 @@ const MdContent = ({ mdContainer = '', ...rest }: IMdContent) => {
   const components = {
     // a: (props) => <PostLink {...props} />,
     pre: (props: any) => <CodeExample {...props} />,
-
-    table: (
-      props: JSX.IntrinsicAttributes &
-        React.ClassAttributes<HTMLTableElement> &
-        React.TableHTMLAttributes<HTMLTableElement>,
-    ) => <table className="table" {...props} />,
-    // img: (props) => <img {...props} />,
+    table: (props: React.TableHTMLAttributes<HTMLTableElement>) => (
+      <table className="xnate-site-md__table font-source-code" {...props} />
+    ),
   };
 
   const mdxExport = getMDXExport(mdContainer);

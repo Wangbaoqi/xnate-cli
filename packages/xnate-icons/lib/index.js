@@ -3,10 +3,22 @@
 Object.defineProperty(exports, '__esModule', {
   value: true,
 });
+Object.defineProperty(exports, 'Copy', {
+  enumerable: true,
+  get: function () {
+    return _copy.default;
+  },
+});
 Object.defineProperty(exports, 'Github', {
   enumerable: true,
   get: function () {
     return _github.default;
+  },
+});
+Object.defineProperty(exports, 'Light', {
+  enumerable: true,
+  get: function () {
+    return _light.default;
   },
 });
 Object.defineProperty(exports, 'Moon', {
@@ -27,6 +39,10 @@ var _github = _interopRequireDefault(require('./github'));
 var _moon = _interopRequireDefault(require('./moon'));
 
 var _sun = _interopRequireDefault(require('./sun'));
+
+var _light = _interopRequireDefault(require('./light'));
+
+var _copy = _interopRequireDefault(require('./copy'));
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : { default: obj };
