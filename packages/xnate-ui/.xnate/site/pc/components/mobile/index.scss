@@ -1,0 +1,19 @@
+
+.xnate-site {
+
+  &-mobile {
+    position: sticky;
+    padding: 20px;
+    width: 325px;
+    
+
+    &__content {
+      height: calc(100vh - 400px);
+      width: 100%;
+      background: var(--site-secondary-bg);
+      color: var(--site-text-color);
+      border-radius: 24px;
+    }
+  }
+  
+}

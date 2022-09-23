@@ -15,19 +15,15 @@
     }
 
     &-doc-container {
+      display: flex;
       flex: 1 0 0;
-      min-width: 500px;
-      padding: 0 25px;
       overflow-x: hidden;
-
       &::-webkit-scrollbar {
         display: none;
       }
 
     }
 
-    &-doc {
-      
-    }
+   
   }
 }

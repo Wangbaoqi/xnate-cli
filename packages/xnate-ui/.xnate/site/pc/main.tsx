@@ -5,9 +5,11 @@ import App from './App'
 
 import { BrowserRouter } from 'react-router-dom'
 
+// eslint-disable-next-line no-undef
 const container = document.getElementById('root')
 
-const root = createRoot(container)
+// eslint-disable-next-line no-undef
+const root = createRoot(container as HTMLElement)
 
 root.render(
   <BrowserRouter>
