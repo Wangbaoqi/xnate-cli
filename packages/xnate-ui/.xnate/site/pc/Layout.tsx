@@ -44,14 +44,10 @@ const Layout = (props: ILayout) => {
       {isHome ? (
         <div className="xnate-site-home">{props.children}</div>
       ) : (
-        <div className="xnate-site-content">
+        <>
           <AppSideBar language={language} navName={navName} menu={menuList} />
-
-          <div className="xnate-site-doc-container">
-            {props.children}
-            <AppMobile />
-          </div>
-        </div>
+          <div className="xnate-site-container">{props.children}</div>
+        </>
       )}
     </div>
   )

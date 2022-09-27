@@ -11,3 +11,4 @@
 //     process.exit(1);
 //   }
 // }
+//# sourceMappingURL=extendErrorMsg.js.map

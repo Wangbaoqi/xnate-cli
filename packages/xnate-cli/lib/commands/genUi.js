@@ -166,3 +166,4 @@ var genUi = function (name) {
   });
 };
 exports.genUi = genUi;
+//# sourceMappingURL=genUi.js.map

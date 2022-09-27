@@ -22,3 +22,4 @@ var resolveXnateConfig = function (emit) {
   return mergeConfig;
 };
 exports.resolveXnateConfig = resolveXnateConfig;
+//# sourceMappingURL=xnate.config.js.map

@@ -145,3 +145,4 @@ module.exports = {
     'color-hl-group-i': '#ed4648',
   },
 };
+//# sourceMappingURL=xnate.default.config.js.map

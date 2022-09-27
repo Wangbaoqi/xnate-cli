@@ -148,3 +148,4 @@ var getTemplateList = function () {
   });
 };
 exports.getTemplateList = getTemplateList;
+//# sourceMappingURL=getTemplate.js.map

@@ -4,8 +4,6 @@ import { plugin, Mode } from 'vite-plugin-markdown';
 import md from '@xnate-plugin/vite-react-md';
 import { createHtmlPlugin } from 'vite-plugin-html';
 
-console.log(md, 'md');
-
 import {
   SITE_DIR,
   VITE_RESOLVE_EXTENSIONS,
@@ -14,6 +12,7 @@ import {
   SITE_MOBILE_ROUTES,
   SITE_PUBLIC_PATH,
 } from '../shared/constant';
+import { resolve } from 'path';
 
 export const getDevConfig = (xnateConfig: any) => {
   const defaultLanguage = get(xnateConfig, 'defaultLanguage');
@@ -47,5 +46,13 @@ export const getDevConfig = (xnateConfig: any) => {
         },
       }),
     ],
+    build: {
+      rollupOptions: {
+        input: {
+          main: resolve(SITE_DIR, 'index.html'),
+          mobile: resolve(SITE_DIR, 'mobile.html'),
+        },
+      },
+    },
   };
 };

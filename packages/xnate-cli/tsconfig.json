@@ -9,6 +9,7 @@
     "moduleResolution":"Node",
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "sourceMap": true,
     "lib": ["esnext", "dom"]
   },
   "include": [

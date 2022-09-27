@@ -231,3 +231,4 @@ var initCommand = function (name, options) {
   });
 };
 exports.initCommand = initCommand;
+//# sourceMappingURL=init.js.map

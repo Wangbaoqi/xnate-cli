@@ -1,13 +1,14 @@
 import React, { useMemo } from 'react';
 
 import { IMdContent } from '.';
-import { getMDXComponent, getMDXExport } from 'mdx-bundler/client';
+import { getMDXExport } from 'mdx-bundler/client';
 
-import { CodeExample } from './components';
+import { CodeExample, TableContent } from './components';
+import { AppMobile } from '..';
 
 import './index.scss';
 
-const MdContent = ({ mdContainer = '', ...rest }: IMdContent) => {
+const MdContent = ({ mdContainer = '', toc = [], ...rest }: IMdContent) => {
   const components = {
     // a: (props) => <PostLink {...props} />,
     pre: (props: any) => <CodeExample {...props} />,
@@ -19,11 +20,15 @@ const MdContent = ({ mdContainer = '', ...rest }: IMdContent) => {
   const mdxExport = getMDXExport(mdContainer);
   const MDXLayout = useMemo(() => mdxExport.default, [mdContainer]);
   return (
-    <article className="xnate-site-md">
-      <section className="xnate-site-md__box">
-        <MDXLayout components={components} />
-      </section>
-    </article>
+    <div className="xnate-site-content">
+      <article className="xnate-site-md">
+        <section className="xnate-site-md__box">
+          <MDXLayout components={components} />
+        </section>
+      </article>
+      <AppMobile />
+      <TableContent toc={toc} />
+    </div>
   );
 };
 

@@ -14,4 +14,12 @@ export declare const getDevConfig: (xnateConfig: any) => {
   };
   publicDir: any;
   plugins: import('vite').PluginOption[];
+  build: {
+    rollupOptions: {
+      input: {
+        main: string;
+        mobile: string;
+      };
+    };
+  };
 };

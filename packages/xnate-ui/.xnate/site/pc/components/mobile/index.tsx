@@ -6,7 +6,7 @@ const AppMobile = () => {
   return (
     <div className="xnate-site-mobile">
       <div className="xnate-site-mobile__content">
-        <iframe src={`./mobile.html/#/`}></iframe>
+        <iframe id="mobile" src={`http://localhost:8081/mobile.html`}></iframe>
       </div>
     </div>
   )

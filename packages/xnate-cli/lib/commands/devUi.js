@@ -142,9 +142,6 @@ var vite_config_1 = require('./../config/vite.config');
 var server;
 var watchers;
 function startServer(force) {
-  if (force === void 0) {
-    force = true;
-  }
   return __awaiter(this, void 0, void 0, function () {
     var isRestart, _a, _b, xnateConfig, viteDevConfig, inlineConfig;
     return __generator(this, function (_c) {
@@ -195,7 +192,7 @@ function startServer(force) {
     });
   });
 }
-function devUi() {
+function devUi(cmd) {
   return __awaiter(this, void 0, void 0, function () {
     return __generator(this, function (_a) {
       switch (_a.label) {
@@ -203,7 +200,7 @@ function devUi() {
           process.env.NODE_ENV = 'development';
           process.env.DEBUG = 'true';
           (0, fs_extra_1.ensureDirSync)(constant_2.SRC_DIR);
-          return [4 /*yield*/, startServer()];
+          return [4 /*yield*/, startServer(cmd.force)];
         case 1:
           _a.sent();
           return [2 /*return*/];
@@ -212,3 +209,4 @@ function devUi() {
   });
 }
 exports.devUi = devUi;
+//# sourceMappingURL=devUi.js.map

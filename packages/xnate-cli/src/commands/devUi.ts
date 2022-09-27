@@ -14,7 +14,7 @@ import { getDevConfig } from './../config/vite.config';
 let server: ViteDevServer;
 let watchers: FSWatcher;
 
-async function startServer(force: boolean = true) {
+async function startServer(force: boolean | undefined) {
   const isRestart = Boolean(server);
 
   logger.info(`${isRestart ? 'Res' : 'S'}tarting server...`);
@@ -40,11 +40,11 @@ async function startServer(force: boolean = true) {
   logger.info(`${isRestart ? 'Res' : 'S'}tart successfully!!!`);
 }
 
-export async function devUi() {
+export async function devUi(cmd: { force?: boolean }) {
   process.env.NODE_ENV = 'development';
   process.env.DEBUG = 'true';
 
   ensureDirSync(SRC_DIR);
 
-  await startServer();
+  await startServer(cmd.force);
 }

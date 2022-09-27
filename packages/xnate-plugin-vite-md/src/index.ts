@@ -25,8 +25,6 @@ const markdownToReact = async (source: string, options, id) => {
     },
   });
 
-  console.log(toc, 'remarkToc');
-
   const { code, frontmatter } = mdJSX;
 
   const tsxOut = `

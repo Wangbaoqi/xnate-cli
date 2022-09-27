@@ -22,3 +22,4 @@ Object.defineProperty(exports, 'initCommand', {
     return init_1.initCommand;
   },
 });
+//# sourceMappingURL=index.js.map

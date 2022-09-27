@@ -10,8 +10,8 @@ var lodash_1 = require('lodash');
 var plugin_react_1 = __importDefault(require('@vitejs/plugin-react'));
 var vite_react_md_1 = __importDefault(require('@xnate-plugin/vite-react-md'));
 var vite_plugin_html_1 = require('vite-plugin-html');
-console.log(vite_react_md_1.default, 'md');
 var constant_1 = require('../shared/constant');
+var path_1 = require('path');
 var getDevConfig = function (xnateConfig) {
   var defaultLanguage = (0, lodash_1.get)(xnateConfig, 'defaultLanguage');
   var host = (0, lodash_1.get)(xnateConfig, 'host');
@@ -43,6 +43,15 @@ var getDevConfig = function (xnateConfig) {
         },
       }),
     ],
+    build: {
+      rollupOptions: {
+        input: {
+          main: (0, path_1.resolve)(constant_1.SITE_DIR, 'index.html'),
+          mobile: (0, path_1.resolve)(constant_1.SITE_DIR, 'mobile.html'),
+        },
+      },
+    },
   };
 };
 exports.getDevConfig = getDevConfig;
+//# sourceMappingURL=vite.config.js.map

@@ -173,6 +173,7 @@ var slash_1 = __importDefault(require('slash'));
 var ROOT_DOCS_RE = /\/docs\/([-\w]+)\/([-\w]+).([-\w]+)\.md/;
 var COMPONENT_DOCS_RE = /\/([-\w]+)\/docs\/([-\w]+)\.md/;
 var ROOT_LOCALE_RE = /\/pages\/([-\w]+)\/locale\/([-\w]+)\.ts/;
+var EXAMPLE_COMPONENT_NAME_RE = /\/([-\w]+)\/example\/index.tsx/;
 var getRootDocPath = function (path) {
   var _a;
   var _b = __read((_a = path.match(ROOT_DOCS_RE)) !== null && _a !== void 0 ? _a : [], 4),
@@ -188,6 +189,10 @@ var getComponentsDocPath = function (path) {
     language = _b[2];
   return '/'.concat(language, '/components/').concat(routePath);
 };
+var getExampleRoutePath = function (path) {
+  var _a;
+  return '/' + ((_a = path.match(EXAMPLE_COMPONENT_NAME_RE)) === null || _a === void 0 ? void 0 : _a[1]);
+};
 var getRootRoutePath = function (rootLocalePath) {
   var _a;
   var _b = __read((_a = rootLocalePath.match(ROOT_LOCALE_RE)) !== null && _a !== void 0 ? _a : [], 3),
@@ -200,8 +205,21 @@ var getRootFilePath = function (rootLocalePath) {
   return rootLocalePath.replace(/locale\/.+/, constant_1.DIR_INDEX);
 };
 exports.getRootFilePath = getRootFilePath;
-// const compileMobileSiteRoutes = () => {
-// }
+var getExamples = function () {
+  return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+      return [
+        2 /*return*/,
+        (0, fs_1.glob)(
+          ''
+            .concat(constant_1.SRC_DIR_COMPONENTS, '/**/')
+            .concat(constant_1.EXAMPLE_DIR_NAME, '/')
+            .concat(constant_1.DIR_INDEX),
+        ),
+      ];
+    });
+  });
+};
 var getComponentsDocs = function () {
   return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
@@ -293,6 +311,29 @@ var getRootLocales = function () {
     });
   });
 };
+var compileMobileSiteRoutes = function () {
+  return __awaiter(void 0, void 0, void 0, function () {
+    var examples, routes, source;
+    return __generator(this, function (_a) {
+      switch (_a.label) {
+        case 0:
+          return [4 /*yield*/, getExamples()];
+        case 1:
+          examples = _a.sent();
+          routes = examples.map(function (example) {
+            return "\n  {\n    path: '"
+              .concat(getExampleRoutePath(example), "',\n    // @ts-ignore\n    component: () => import('")
+              .concat(example, "')\n  }");
+          });
+          source = 'export default [    '.concat(routes.join(','), '\n]');
+          return [4 /*yield*/, (0, fs_1.outputFileSyncOnChange)(constant_1.SITE_MOBILE_ROUTES, source)];
+        case 2:
+          _a.sent();
+          return [2 /*return*/];
+      }
+    });
+  });
+};
 var compilePcSiteRoutes = function () {
   return __awaiter(void 0, void 0, void 0, function () {
     var _a, componentsDocs, rootDoc, rootLocales, rootPagesRoutes, rootDocsRoutes, componentDocsRoutes, source;
@@ -344,7 +385,7 @@ var compileSite = function () {
         case 0:
           // resolve xnate.config
           (0, xnate_config_1.resolveXnateConfig)(true);
-          return [4 /*yield*/, Promise.all([compileSiteSource(), compilePcSiteRoutes()])];
+          return [4 /*yield*/, Promise.all([compileMobileSiteRoutes(), compilePcSiteRoutes(), compileSiteSource()])];
         case 1:
           _a.sent();
           return [2 /*return*/];
@@ -353,3 +394,4 @@ var compileSite = function () {
   });
 };
 exports.compileSite = compileSite;
+//# sourceMappingURL=compilerSite.js.map

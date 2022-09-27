@@ -21,3 +21,4 @@ exports.logger = {
     console.log(chalk_1.default.hex('#f44336')(text));
   },
 };
+//# sourceMappingURL=log.js.map

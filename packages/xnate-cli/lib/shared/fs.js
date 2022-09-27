@@ -197,3 +197,4 @@ var glob = function (pattern) {
   });
 };
 exports.glob = glob;
+//# sourceMappingURL=fs.js.map

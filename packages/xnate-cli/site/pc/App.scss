@@ -5,23 +5,27 @@
 
   &-site {
     min-width: 1200px;
-    padding: 60px 0 0;
 
-    &-content {
-      display: flex;
-      background: var(--site-bg-color);
-      margin-left: 240px;
-      min-height: calc(100vh - 60px);
+   
+
+    &-container {
+      margin-left: 280px;
+
+     
+
     }
 
-    &-doc-container {
+    &-content {
+      position: relative;
       display: flex;
-      flex: 1 0 0;
-      overflow-x: hidden;
-      &::-webkit-scrollbar {
-        display: none;
-      }
-
+      justify-content: space-between;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding-top: 60px;
+      // &::-webkit-scrollbar {
+      //   display: none;
+      // }
+      
     }
 
    

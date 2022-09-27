@@ -70,3 +70,4 @@ exports.SITE_PC_DIR = path.resolve(exports.CWD, '.xnate/site/pc');
 exports.SITE_PC_ROUTES = path.resolve(exports.CWD, '.xnate/pc.routes.ts');
 exports.SITE_MOBILE_ROUTES = path.resolve(exports.CWD, '.xnate/mobile.routes.ts');
 exports.SITE_CONFIG = path.resolve(exports.CWD, '.xnate/site.config.json');
+//# sourceMappingURL=constant.js.map

@@ -6,6 +6,8 @@ import {
   LOCALE_DIR_NAME,
   SITE_PC_DIR,
   DIR_INDEX,
+  EXAMPLE_DIR_NAME,
+  SITE_MOBILE_ROUTES,
 } from './../shared/constant';
 
 import { copy } from 'fs-extra';
@@ -19,6 +21,7 @@ import slash from 'slash';
 const ROOT_DOCS_RE = /\/docs\/([-\w]+)\/([-\w]+).([-\w]+)\.md/;
 const COMPONENT_DOCS_RE = /\/([-\w]+)\/docs\/([-\w]+)\.md/;
 const ROOT_LOCALE_RE = /\/pages\/([-\w]+)\/locale\/([-\w]+)\.ts/;
+const EXAMPLE_COMPONENT_NAME_RE = /\/([-\w]+)\/example\/index.tsx/;
 
 const getRootDocPath = (path: string): string => {
   const [, type, routePath, language] = path.match(ROOT_DOCS_RE) ?? [];
@@ -30,6 +33,10 @@ const getComponentsDocPath = (path: string): string => {
   return `/${language}/components/${routePath}`;
 };
 
+const getExampleRoutePath = (path: string): string => {
+  return '/' + path.match(EXAMPLE_COMPONENT_NAME_RE)?.[1];
+};
+
 export const getRootRoutePath = (rootLocalePath: string): string => {
   const [, routePath, language] = rootLocalePath.match(ROOT_LOCALE_RE) ?? [];
   return `/${language}/${routePath}`;
@@ -39,9 +46,9 @@ export const getRootFilePath = (rootLocalePath: string): string => {
   return rootLocalePath.replace(/locale\/.+/, DIR_INDEX);
 };
 
-// const compileMobileSiteRoutes = () => {
-
-// }
+const getExamples = async (): Promise<string[]> => {
+  return glob(`${SRC_DIR_COMPONENTS}/**/${EXAMPLE_DIR_NAME}/${DIR_INDEX}`);
+};
 
 const getComponentsDocs = async (): Promise<string[]> => {
   return glob(`${SRC_DIR_COMPONENTS}/**/${DOCS_DIR_NAME}/*.md`);
@@ -84,6 +91,25 @@ const getRootLocales = async (): Promise<string[]> => {
   });
 
   return Promise.resolve(Array.from(map.values()));
+};
+
+const compileMobileSiteRoutes = async () => {
+  const examples = await getExamples();
+
+  const routes = examples.map(
+    (example) => `
+  {
+    path: '${getExampleRoutePath(example)}',
+    // @ts-ignore
+    component: () => import('${example}')
+  }`,
+  );
+
+  const source = `export default [\
+    ${routes.join(',')}
+]`;
+
+  await outputFileSyncOnChange(SITE_MOBILE_ROUTES, source);
 };
 
 const compilePcSiteRoutes = async () => {
@@ -135,5 +161,5 @@ const compileSiteSource = () => {
 export const compileSite = async function () {
   // resolve xnate.config
   resolveXnateConfig(true);
-  await Promise.all([compileSiteSource(), compilePcSiteRoutes()]);
+  await Promise.all([compileMobileSiteRoutes(), compilePcSiteRoutes(), compileSiteSource()]);
 };

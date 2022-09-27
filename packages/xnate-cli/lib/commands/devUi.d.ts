@@ -1,1 +1,1 @@
-export declare function devUi(): Promise<void>;
+export declare function devUi(cmd: { force?: boolean }): Promise<void>;
