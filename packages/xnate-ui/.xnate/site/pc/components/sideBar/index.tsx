@@ -28,8 +28,6 @@ const AppSideBar = (props: ISidebar) => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
 
-  console.log(pathname, 'pathname')
-
   const renderMenu = (item: IMenu, key: number) => {
     const itemCls = clsx(
       'xnate-site-sidebar__item',

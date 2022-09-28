@@ -5,14 +5,16 @@ export enum MenuType {
 }
 
 export interface IPCLocationInfo {
-  language: string;
-  navName: string;
+  language?: string;
+  navName?: string;
+  secondName?: string;
 }
 
 export const getPCLocationInfo = (): IPCLocationInfo => {
-  const [, language, navName] = window.location.pathname.split('/');
+  const [, language, navName, secondName] = window.location.pathname.split('/');
   return {
     language,
     navName,
+    secondName,
   };
 };

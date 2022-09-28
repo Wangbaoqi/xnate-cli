@@ -23,8 +23,6 @@ const Layout = (props: ILayout) => {
 
   const menuList = menu[navName] || []
 
-  console.log(props.children, 'menu')
-
   useEffect(() => {
     if (redirect && pathname === '/') {
       navigate(`${defaultLanguage}${redirect}`)
@@ -38,6 +36,7 @@ const Layout = (props: ILayout) => {
       navigate(`${language}${pathRedirect}`)
     }
   }, [navName])
+
   return (
     <div className="xnate-site">
       <AppHeader language={language} navList={navs} navName={navName} />

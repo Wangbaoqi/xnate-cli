@@ -1,0 +1,15 @@
+
+.xnate-site-header {
+  &__theme {
+    width: 42px;
+    height: 42px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--site-text-color);
+    &:hover {
+      color: var(--site-side-bar-color);
+    }
+  }
+}

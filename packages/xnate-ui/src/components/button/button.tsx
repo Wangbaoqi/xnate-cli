@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { ButtonProps } from './propsType'
 
-import './index.less'
+import './index.scss'
 
 const Button: React.FC<ButtonProps> = (props) => {
   const {

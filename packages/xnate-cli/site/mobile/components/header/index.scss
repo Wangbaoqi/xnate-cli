@@ -1,0 +1,33 @@
+
+.xnate-site-app {
+
+
+  &__links {
+    width: 42px;
+    height: 42px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--site-text-color);
+    &:hover {
+      color: var(--site-side-bar-color);
+    }
+  }
+
+  &__header {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 14vw;
+    background: var(--site-side-bar-active-bg);
+    border-radius: 14px 14px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    box-sizing: border-box;
+    
+  }
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Moon, Sun } from '@xnate-design/icons';
 import { useLocalStorageState } from 'ahooks';
+import './index.scss';
 
 const useTheme = (): [string, () => void] => {
   const [theme, setTheme] = useLocalStorageState('XNATE_THEMES', {

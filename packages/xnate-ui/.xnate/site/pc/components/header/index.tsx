@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import clsx from 'clsx'
 import config from '@config'
 import { get } from 'lodash-es'
-import ThemeAction from './action/themeAction'
+import { ThemeAction } from '../../../components'
 import './index.scss'
 import GitHub from '@xnate-design/icons/es/github'
 
