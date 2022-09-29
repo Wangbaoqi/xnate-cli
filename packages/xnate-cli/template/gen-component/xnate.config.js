@@ -74,7 +74,6 @@ module.exports = {
           'en-US': 'Home',
         },
         path: '/home',
-        index: true,
       },
       {
         text: {
@@ -90,6 +89,7 @@ module.exports = {
           'en-US': 'Components',
         },
         path: '/components',
+        index: true,
       },
     ],
     menu: {

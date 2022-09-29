@@ -10,32 +10,42 @@ interface ILayout {
   children?: React.ReactElement;
 }
 
+interface window {
+  onMobileRouteChange: () => void;
+}
+
 const Layout = (props: ILayout) => {
   const params = useParams();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { language = '', navName = '' } = getPCLocationInfo();
   const {
-    pc: { navs = [], menu = [], redirect = '' },
+    pc: { navs = [], menu = {}, redirect = '' },
+    mobile: { redirect: mobileRedirect = '' },
     defaultLanguage = '',
   } = config;
   const isHome = navName === 'home';
 
   const menuList = menu[navName] || [];
 
+  console.log('render pc app');
+
   useEffect(() => {
     if (redirect && pathname === '/') {
       navigate(`${defaultLanguage}${redirect}`);
     }
-  }, []);
 
-  useEffect(() => {
-    if (navName === 'guide' || navName === 'components') {
-      const fMenu = menuList[0] || {};
-      const pathRedirect = fMenu.path || (fMenu.children && fMenu.children[0].path);
-      navigate(`${language}${pathRedirect}`);
+    if (!window.onMobileRouteChange) {
+      Object.defineProperty(window, 'onMobileRouteChange', {
+        value: (path: string, language: string) => {
+          if (path !== mobileRedirect) {
+            navigate(`/${language}/components/${path}`);
+            return;
+          }
+        },
+      });
     }
-  }, [navName]);
+  }, []);
 
   return (
     <div className="xnate-site">

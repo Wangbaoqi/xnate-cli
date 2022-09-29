@@ -35,4 +35,20 @@ export default [
     component: () =>
       import('/Users/wangbaoqi/personal/xnate-cli/xnate-cli/packages/xnate-ui/src/components/button/docs/zh-CN.md'),
   },
+  {
+    path: '/zh-CN/guide',
+    redirect: '/zh-CN/guide/intro',
+  },
+  {
+    path: '/zh-CN/components',
+    redirect: '/zh-CN/components/button',
+  },
+  {
+    path: '/en-US/guide',
+    redirect: '/en-US/guide/intro',
+  },
+  {
+    path: '/en-US/components',
+    redirect: '/en-US/components/button',
+  },
 ]

@@ -53,8 +53,7 @@
           "zh-CN": "首页",
           "en-US": "Home"
         },
-        "path": "/home",
-        "index": true
+        "path": "/home"
       },
       {
         "text": {
@@ -69,7 +68,8 @@
           "zh-CN": "组件",
           "en-US": "Components"
         },
-        "path": "/components"
+        "path": "/components",
+        "index": true
       }
     ],
     "redirect": "/home",

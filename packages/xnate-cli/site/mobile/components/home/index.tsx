@@ -2,16 +2,27 @@ import React, { useEffect } from 'react';
 
 import config from '@config';
 
-import { useParams, useLocation, useSearchParams, useNavigate } from 'react-router-dom';
+import { useParams, useLocation, useSearchParams, useNavigate, createSearchParams } from 'react-router-dom';
 import { getAllComponents } from '../../utils';
 import { ChevronRight } from '@xnate-design/icons';
 
 import './index.scss';
+import { inIframe, isPhone } from '../../../utils';
+
+const useNavigateSearch = () => {
+  const navigate = useNavigate();
+  return (pathname: string, params: any) => {
+    navigate({
+      pathname,
+      search: `?${createSearchParams(params)}`,
+    });
+  };
+};
 
 function MobileHome() {
   const params = useParams();
   const location = useLocation();
-  const navigate = useNavigate();
+  const navigateSearch = useNavigateSearch();
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -25,9 +36,14 @@ function MobileHome() {
   const language = searchParams.get('language');
   const componentList = getAllComponents(components);
 
-  const toComponents = (c) => {
-    console.log(c, 'c router');
-    navigate(`${c.path}`);
+  const toComponents = (path: string) => {
+    navigateSearch(`/${path}`, {
+      language: language,
+    });
+
+    if (!isPhone() && inIframe()) {
+      window?.top?.onMobileRouteChange(path, language);
+    }
   };
 
   return (
@@ -40,7 +56,7 @@ function MobileHome() {
       </section>
       <section className="xnate-site-app__component">
         {componentList.map((c, idx) => (
-          <div className="xnate-site-app__component-item" key={idx} onClick={() => toComponents(c)}>
+          <div className="xnate-site-app__component-item" key={idx} onClick={() => toComponents(c.path)}>
             <span>{c.text[language]}</span>
             <ChevronRight fontSize={'18px'} />
           </div>

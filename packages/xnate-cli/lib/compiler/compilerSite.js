@@ -237,6 +237,34 @@ var getRootDocs = function () {
     });
   });
 };
+var getRootRouteDoc = function () {
+  var xnateConfig = (0, xnate_config_1.resolveXnateConfig)();
+  var menu = (0, lodash_1.get)(xnateConfig, 'pc.menu');
+  var navs = (0, lodash_1.get)(xnateConfig, 'pc.navs');
+  var routeMap = navs
+    .filter(function (n) {
+      return n.index;
+    })
+    .map(function (m) {
+      return m.path;
+    });
+  var configRoute = [];
+  routeMap.forEach(function (route) {
+    var _a;
+    var path = route.replace('/', '');
+    var routeList = (_a = menu[path]) !== null && _a !== void 0 ? _a : [];
+    var firstRoute = routeList.shift();
+    var redirect = route;
+    if (firstRoute) {
+      redirect = firstRoute.children ? firstRoute.children[0].path : firstRoute.path;
+    }
+    configRoute.push({
+      path: route,
+      redirect: redirect,
+    });
+  });
+  return configRoute;
+};
 var getRootLocales = function () {
   return __awaiter(void 0, void 0, void 0, function () {
     var defaultLanguage, userPages, baseLocales, userLocales, map;
@@ -336,7 +364,17 @@ var compileMobileSiteRoutes = function () {
 };
 var compilePcSiteRoutes = function () {
   return __awaiter(void 0, void 0, void 0, function () {
-    var _a, componentsDocs, rootDoc, rootLocales, rootPagesRoutes, rootDocsRoutes, componentDocsRoutes, source;
+    var _a,
+      componentsDocs,
+      rootDoc,
+      rootLocales,
+      rootPagesRoutes,
+      rootDocsRoutes,
+      componentDocsRoutes,
+      rootRouteDoc,
+      rootRouteDocsZh,
+      rootRouteDocsEn,
+      source;
     return __generator(this, function (_b) {
       switch (_b.label) {
         case 0:
@@ -361,10 +399,29 @@ var compilePcSiteRoutes = function () {
               .concat(getComponentsDocPath(doc), "',\n    // @ts-ignore\n    component: () => import('")
               .concat(doc, "')\n  }");
           });
+          rootRouteDoc = getRootRouteDoc();
+          rootRouteDocsZh = rootRouteDoc.map(function (doc) {
+            return "\n  {\n    path: '/zh-CN"
+              .concat(doc.path, "',\n    redirect: '/zh-CN")
+              .concat(doc.redirect, "',\n  }");
+          });
+          rootRouteDocsEn = rootRouteDoc.map(function (doc) {
+            return "\n  {\n    path: '/en-US"
+              .concat(doc.path, "',\n    redirect: '/en-US")
+              .concat(doc.redirect, "',\n  }");
+          });
           source = 'export default [    '.concat(
             __spreadArray(
-              __spreadArray(__spreadArray([], __read(rootPagesRoutes), false), __read(rootDocsRoutes), false),
-              __read(componentDocsRoutes),
+              __spreadArray(
+                __spreadArray(
+                  __spreadArray(__spreadArray([], __read(rootPagesRoutes), false), __read(rootDocsRoutes), false),
+                  __read(componentDocsRoutes),
+                  false,
+                ),
+                __read(rootRouteDocsZh),
+                false,
+              ),
+              __read(rootRouteDocsEn),
               false,
             ),
             ',\n]',

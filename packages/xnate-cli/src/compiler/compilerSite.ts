@@ -58,6 +58,32 @@ const getRootDocs = async (): Promise<string[]> => {
   return glob(`${ROOT_DOCS_DIR}/**/*.md`);
 };
 
+const getRootRouteDoc = () => {
+  const xnateConfig = resolveXnateConfig();
+  const menu = get(xnateConfig, 'pc.menu');
+  const navs = get(xnateConfig, 'pc.navs');
+
+  const routeMap = navs.filter((n) => n.index).map((m) => m.path);
+
+  const configRoute = [];
+
+  routeMap.forEach((route: string) => {
+    const path = route.replace('/', '');
+    const routeList = menu[path] ?? [];
+    const firstRoute = routeList.shift();
+    let redirect = route;
+    if (firstRoute) {
+      redirect = firstRoute.children ? firstRoute.children[0].path : firstRoute.path;
+    }
+    configRoute.push({
+      path: route,
+      redirect: redirect,
+    });
+  });
+
+  return configRoute;
+};
+
 const getRootLocales = async (): Promise<string[]> => {
   const defaultLanguage = get(resolveXnateConfig(), 'defaultLanguage');
 
@@ -147,8 +173,25 @@ const compilePcSiteRoutes = async () => {
   }`,
   );
 
+  const rootRouteDoc = getRootRouteDoc();
+
+  const rootRouteDocsZh = rootRouteDoc.map(
+    (doc) => `
+  {
+    path: '/zh-CN${doc.path}',
+    redirect: '/zh-CN${doc.redirect}',
+  }`,
+  );
+  const rootRouteDocsEn = rootRouteDoc.map(
+    (doc) => `
+  {
+    path: '/en-US${doc.path}',
+    redirect: '/en-US${doc.redirect}',
+  }`,
+  );
+
   const source = `export default [\
-    ${[...rootPagesRoutes, ...rootDocsRoutes, ...componentDocsRoutes]},
+    ${[...rootPagesRoutes, ...rootDocsRoutes, ...componentDocsRoutes, ...rootRouteDocsZh, ...rootRouteDocsEn]},
 ]`;
 
   outputFileSyncOnChange(SITE_PC_ROUTES, source);

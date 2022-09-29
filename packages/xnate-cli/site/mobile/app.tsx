@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
 
-import { get } from 'lodash-es';
 import { Header } from './components';
-import { useParams, useLocation, Outlet, useNavigate } from 'react-router-dom';
-import { getAllComponents } from './utils';
+import { useSearchParams, useLocation, useNavigate } from 'react-router-dom';
+import { inIframe, isPhone } from '../utils';
 import RouteView from './routeView';
-
 import config from '@config';
 
 import './index.scss';
@@ -13,19 +11,13 @@ import './index.scss';
 function App() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-
+  const [searchParams, setSearchParams] = useSearchParams();
+  const language = searchParams.get('language');
   const {
-    pc: {
-      navs = [],
-      menu: { components = [] },
-    },
-    mobile: { redirect = '', title = '', header = {} },
-    defaultLanguage = '',
+    mobile: { redirect = '' },
   } = config;
 
-  const componentList = getAllComponents(components);
-
-  console.log(componentList, 'mobile components');
+  console.log('render mobile app');
 
   useEffect(() => {
     if (redirect && pathname === '/') {
