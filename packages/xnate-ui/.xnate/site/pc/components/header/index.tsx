@@ -32,30 +32,32 @@ const AppHeader = (props: IHeader) => {
   const github = get(config, 'pc.header.github')
   const darkMode = get(config, 'pc.header.darkMode')
 
+  const headerNav = React.useMemo(() => {
+    return navList.map((n, i) => {
+      const active = n.path === `/${navName}`
+      const headCls = clsx('xnate-site-header__nav-item', { 'xnate-site-header__nav-item--active': active })
+      const item = n.text || {}
+      return (
+        <React.Fragment key={i}>
+          {n.path ? (
+            <Link className={headCls} to={`/${language}${n.path}`}>
+              {item[language]}
+            </Link>
+          ) : (
+            item[language]
+          )}
+        </React.Fragment>
+      )
+    })
+  }, [navList, navName, language])
+
   return (
     <div className="xnate-site-header">
       <div className="xnate-site-header__lead">
         <div className="xnate-site-header__left">
           <div className="xnate-site-header__title">{title}</div>
         </div>
-        <nav className="xnate-site-header__nav">
-          {navList.map((n, i) => {
-            const active = n.path === `/${navName}`
-            const headCls = clsx('xnate-site-header__nav-item', { 'xnate-site-header__nav-item--active': active })
-            const item = n.text || {}
-            return (
-              <React.Fragment key={i}>
-                {n.path ? (
-                  <Link className={headCls} to={`/${language}${n.path}`}>
-                    {item[language]}
-                  </Link>
-                ) : (
-                  item[language]
-                )}
-              </React.Fragment>
-            )
-          })}
-        </nav>
+        <nav className="xnate-site-header__nav">{headerNav}</nav>
       </div>
       <div className="xnate-site-header__tail">
         <div className="xnate-site-header__versions"></div>

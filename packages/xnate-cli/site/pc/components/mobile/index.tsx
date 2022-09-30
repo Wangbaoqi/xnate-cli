@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
-
-import './index.scss';
+import { useNavigate } from 'react-router-dom';
 
 import { getPCLocationInfo } from '../../utils';
-
+import './index.scss';
 interface IMobileProps {
   componentsName?: string;
   language?: string;
@@ -11,15 +10,24 @@ interface IMobileProps {
 }
 
 const AppMobile = () => {
-  const { language = '', navName = '', secondName } = getPCLocationInfo();
+  const navigate = useNavigate();
 
+  const { language = '', navName = '', secondName } = getPCLocationInfo();
   const componentsName = navName === 'components' ? secondName : 'home';
 
-  console.log(language, componentsName, 'componentsName');
+  useEffect(() => {
+    const handler = (event) => {
+      const { language: curLanguage, path } = event.data;
+      if (curLanguage && path) {
+        console.log(`/${curLanguage}/components/${path}`, 'envet');
+        // navigate(`/${language}/components/${path}`);
+        navigate(`/${language}/home`);
+      }
+    };
+    window.addEventListener('message', handler);
+    return () => window.removeEventListener('message', handler);
+  }, []);
 
-  const replace = '';
-
-  // ${componentsName}&language=${language}&platform=pc&reaplce=${replace}
   return (
     <div className="xnate-site-mobile">
       <div className="xnate-site-mobile__content">

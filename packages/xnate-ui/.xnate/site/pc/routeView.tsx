@@ -10,7 +10,7 @@ const RouteView = () => {
     <Routes>
       {routesConfig.map((route, idx: number) =>
         route.redirect ? (
-          <Route key={idx} path={route.path} element={<Navigate to={route.redirect} />} />
+          <Route key={idx} path={route.path} element={<Navigate to={route.redirect} replace={true} />} />
         ) : (
           <Route key={idx} path={route.path} element={<RouteComponent lazyComponent={route.component} />}></Route>
         )
