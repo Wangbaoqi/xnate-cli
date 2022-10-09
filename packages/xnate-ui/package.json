@@ -1,5 +1,5 @@
 {
-  "name": "basic-ui",
+  "name": "@xnate-design/react-xnate",
   "version": "0.0.0",
   "description": "A basic components library",
   "main": "lib/index.js",

@@ -1,9 +1,9 @@
 {
-  "name": "Basic",
+  "name": "React Xnate",
   "namespace": "b",
   "host": "localhost",
   "port": 8080,
-  "title": "Basic UI",
+  "title": "React Xnate UI",
   "themesKey": "XNATE_THEMES",
   "logo": "./logo.svg",
   "defaultLanguage": "zh-CN",
@@ -74,8 +74,8 @@
     ],
     "redirect": "/home",
     "title": {
-      "zh-CN": "一个组件库",
-      "en-US": "Material design mobile components built for Vue3"
+      "zh-CN": "React Xnate UI 是一个基于React的移动组件库",
+      "en-US": "React Xnate UI is mobile components ui based on React"
     },
     "header": {
       "i18n": null,

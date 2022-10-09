@@ -10,6 +10,15 @@
     justify-content: center;
     align-items: center;
     flex: 1;
+
+    & h1 {
+      font-size: 74px;
+    }
+
+    &-desc {
+      font-size: 20px;
+      margin: 20px 0;
+    }
   }
   &__right {
     flex: 1;

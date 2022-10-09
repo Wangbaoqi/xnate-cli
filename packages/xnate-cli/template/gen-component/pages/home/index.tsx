@@ -25,7 +25,7 @@ const Home = () => {
     <div className="xnate-site-home">
       <div className="xnate-site-home__left">
         <h1>{siteTitle}</h1>
-        <p>{title[language]}</p>
+        <p className="xnate-site-home__left-desc">{title[language]}</p>
         <div className="xnate-site-left-box">
           <div className="xnate-site-left-start">{homePack[language].started}</div>
           <div></div>

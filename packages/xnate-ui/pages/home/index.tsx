@@ -4,6 +4,8 @@ import config from '@config'
 import en_US from './locale/en-US'
 import zh_CN from './locale/zh-CN'
 
+import { Button } from '../../src/index'
+
 import { getPCLocationInfo } from '../../.xnate/site/pc/utils'
 
 import './index.scss'
@@ -21,18 +23,18 @@ const Home = () => {
 
   const { language = '', navName = '' } = getPCLocationInfo()
 
-  console.log(homePack[language])
-
   return (
     <div className="xnate-site-home">
       <div className="xnate-site-home__left">
         <h1>{siteTitle}</h1>
-        <p>{title[language]}</p>
-        <div className="xnate-site-left-box">
+        <p className="xnate-site-home__left-desc">{title[language]}</p>
+        <div className="xnate-site-home__left-box">
           <div className="xnate-site-left-start">{homePack[language].started}</div>
         </div>
       </div>
-      <div className="xnate-site-home__right"></div>
+      <div className="xnate-site-home__right">
+        <Button>btnn</Button>
+      </div>
     </div>
   )
 }

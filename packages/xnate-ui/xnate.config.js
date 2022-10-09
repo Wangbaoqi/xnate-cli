@@ -1,7 +1,7 @@
 module.exports = {
-  name: 'Basic',
+  name: 'React Xnate',
   namespace: 'b',
-  title: 'Basic UI',
+  title: 'React Xnate UI',
   logo: './logo.svg',
   useMobile: true,
   themes: {
@@ -58,7 +58,8 @@ module.exports = {
   pc: {
     redirect: '/home',
     title: {
-      'zh-CN': '一个组件库',
+      'zh-CN': 'React Xnate UI 是一个基于React的移动组件库',
+      'en-US': 'React Xnate UI is mobile components ui based on React',
     },
     header: {
       darkMode: null,
