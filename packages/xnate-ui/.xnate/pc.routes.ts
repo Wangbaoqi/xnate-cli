@@ -2,14 +2,12 @@ export default [
   {
     path: '/en-US/home',
     // @ts-ignore
-    component: () =>
-      import('/Users/wangbaoqi/personal/xnate-cli/xnate-cli/packages/xnate-ui/.xnate/site/pc/pages/home/index.tsx'),
+    component: () => import('/Users/wangbaoqi/personal/xnate-cli/xnate-cli/packages/xnate-ui/pages/home/index.tsx'),
   },
   {
     path: '/zh-CN/home',
     // @ts-ignore
-    component: () =>
-      import('/Users/wangbaoqi/personal/xnate-cli/xnate-cli/packages/xnate-ui/.xnate/site/pc/pages/home/index.tsx'),
+    component: () => import('/Users/wangbaoqi/personal/xnate-cli/xnate-cli/packages/xnate-ui/pages/home/index.tsx'),
   },
   {
     path: '/zh-CN/guide/intro',

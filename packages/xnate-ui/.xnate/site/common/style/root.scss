@@ -13,12 +13,11 @@
   --site-code-color: hsl(195, 91%, 34%);
   --site-strong-color: #2c0b8e;
   --site-pre-bg: #fff;
-
+  --site-hover-bg: #fff;
+  --site-mobile-header-bg: #087ea6;
   --site-side-bar-active-bg: hsla(220, 99%, 61%, 0.102);
   --site-side-bar-color: #1d92e9;
-
-  --site-side-scroll-bg: rgba(179,229,255,.1)
-
+  --site-side-scroll-bg: rgba(179,229,255,.1);
   --site-font-size-md: $site-font-size-md;
 
   --theme-plain: #24292e;
@@ -45,13 +44,11 @@ html[data-theme='dark'] {
   --site-code-color: hsl(195, 82%, 44%);
   --site-strong-color: #ffe100;
   --site-pre-bg: #151f28;
-
-  
-
+  --site-hover-bg: #374151;
+  --site-mobile-header-bg: #087ea6;
   --site-side-bar-active-bg: hsl(210, 16%, 20%);
   --site-side-bar-color: #149ecc;
-
-  --site-side-scroll-bg: rgba(179,229,255,.1)
+  --site-side-scroll-bg: rgba(179,229,255,.1);
 
   --theme-plain: #fff;
   --theme-comment: #757575;

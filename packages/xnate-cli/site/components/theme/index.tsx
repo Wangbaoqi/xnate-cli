@@ -15,8 +15,13 @@ const useTheme = (): [string, () => void] => {
   };
 
   const updateHTMLTag = (val: string) => {
-    const attr = document.querySelector('html');
-    attr?.setAttribute('data-theme', val);
+    const html = document.querySelector('html');
+    const iframe = document.querySelector('iframe');
+    if (iframe) {
+      const childHtml = iframe.contentDocument?.querySelector('html');
+      childHtml?.setAttribute('data-theme', val);
+    }
+    html?.setAttribute('data-theme', val);
   };
 
   React.useEffect(() => {

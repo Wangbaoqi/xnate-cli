@@ -10,10 +10,6 @@ interface ILayout {
   children?: React.ReactElement
 }
 
-interface window {
-  onMobileRouteChange: () => void
-}
-
 const Layout = (props: ILayout) => {
   const params = useParams()
   const navigate = useNavigate()
@@ -34,24 +30,13 @@ const Layout = (props: ILayout) => {
     if (redirect && pathname === '/') {
       navigate(`${defaultLanguage}${redirect}`)
     }
-
-    if (!window.onMobileRouteChange) {
-      Object.defineProperty(window, 'onMobileRouteChange', {
-        value: (path: string, language: string) => {
-          if (path !== mobileRedirect) {
-            navigate(`/${language}/components/${path}`)
-            return
-          }
-        },
-      })
-    }
   }, [])
 
   return (
     <div className="xnate-site">
       <AppHeader language={language} navList={navs} navName={navName} />
       {isHome ? (
-        <div className="xnate-site-home">{props.children}</div>
+        <>{props.children}</>
       ) : (
         <>
           <AppSideBar language={language} navName={navName} menu={menuList} />

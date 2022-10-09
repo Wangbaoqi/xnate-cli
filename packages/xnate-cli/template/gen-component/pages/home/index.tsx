@@ -4,7 +4,7 @@ import config from '@config'
 import en_US from './locale/en-US'
 import zh_CN from './locale/zh-CN'
 
-import { getPCLocationInfo } from '../../utils'
+import { getPCLocationInfo } from '../../../../site/pc/utils'
 
 import './index.scss'
 

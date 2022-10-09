@@ -9,9 +9,7 @@ function MobileHeader() {
       <a className="xnate-site-app__links" href={''} target="_blank">
         <Github fontSize="20px" />
       </a>
-      <div className="xnate-site-app__header-right">
-        <ThemeAction />
-      </div>
+      <div className="xnate-site-app__header-right">{/* <ThemeAction /> */}</div>
     </header>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-
+import { useLocalStorageState } from 'ahooks';
 import { Header } from './components';
 import { useSearchParams, useLocation, useNavigate } from 'react-router-dom';
 import { inIframe, isPhone } from '../utils';
@@ -12,6 +12,9 @@ function App() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [theme] = useLocalStorageState('XNATE_THEMES', {
+    defaultValue: 'light',
+  });
   const language = searchParams.get('language');
   const {
     mobile: { redirect = '' },
@@ -19,10 +22,16 @@ function App() {
 
   console.log('render mobile app');
 
+  const updateHTMLTag = (val: string) => {
+    const html = document.querySelector('html');
+    html?.setAttribute('data-theme', val);
+  };
+
   useEffect(() => {
     if (redirect && pathname === '/') {
       navigate(`/home`);
     }
+    updateHTMLTag(theme);
   }, []);
 
   return (

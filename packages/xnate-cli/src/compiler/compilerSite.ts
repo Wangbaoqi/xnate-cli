@@ -21,6 +21,7 @@ import slash from 'slash';
 const ROOT_DOCS_RE = /\/docs\/([-\w]+)\/([-\w]+).([-\w]+)\.md/;
 const COMPONENT_DOCS_RE = /\/([-\w]+)\/docs\/([-\w]+)\.md/;
 const ROOT_LOCALE_RE = /\/pages\/([-\w]+)\/locale\/([-\w]+)\.ts/;
+const HOME_LOCALE_RE = /\/docs\/home\/\/locale\/([-\w]+)\.ts/;
 const EXAMPLE_COMPONENT_NAME_RE = /\/([-\w]+)\/example\/index.tsx/;
 
 const getRootDocPath = (path: string): string => {
@@ -89,7 +90,7 @@ const getRootLocales = async (): Promise<string[]> => {
 
   const userPages = await glob(`${ROOT_PAGES_DIR}/*`);
 
-  const baseLocales = await glob(`${SITE}/pc/pages/**/${LOCALE_DIR_NAME}/*.ts`);
+  const baseLocales = await glob(`${ROOT_PAGES_DIR}/**/${LOCALE_DIR_NAME}/*.ts`);
 
   const userLocales = await userPages.reduce<Promise<string[]>>(
     async (userLocales: Promise<string[]>, page: string) => {
@@ -108,7 +109,7 @@ const getRootLocales = async (): Promise<string[]> => {
   const map = new Map();
   baseLocales.forEach((locale) => {
     const [, routePath, language] = locale.match(ROOT_LOCALE_RE) ?? [];
-    map.set(routePath + language, slash(`${SITE_PC_DIR}/pages/${routePath}/locale/${language}.ts`));
+    map.set(routePath + language, slash(`${ROOT_PAGES_DIR}/${routePath}/locale/${language}.ts`));
   });
 
   userLocales.forEach((locale) => {
