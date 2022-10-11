@@ -4,33 +4,30 @@
 // 按钮基本属性
 $btn-font-weight: 400;
 $btn-base-padding: 0.25rem;
-$btn-padding-y: 0rem;
-$btn-padding-x: 0.75rem;
-$btn-height: 2.75rem;
-$btn-width: 100%;
+
 $btn-font-family: $font-family-base;
-$btn-font-size: $font-size-base;
 $btn-line-height: $line-height-base;
-
-//不同大小按钮的 padding 和 font size
-$btn-padding-y-sm: 0rem;
-$btn-padding-x-sm: 0.5rem;
-$btn-font-size-sm: $font-size-sm;
-$btn-height-sm: $btn-height * 0.5;
-$btn-width-sm: 5rem;
-
-$btn-padding-y-lg: 0rem;
-$btn-padding-x-lg: 1rem;
-$btn-font-size-lg: $font-size-lg;
-$btn-height-lg: $btn-height * 1.14;
-$btn-width-lg: $btn-width;
-
-// 按钮边框
 $btn-border-width: $border-width;
-
-// 按钮其他
 $btn-box-shadow: inset 0 1px 0 rgba($white, 0.15), 0 1px 1px rgba($black, 0.075);
 $btn-disabled-opacity: 0.65;
+
+
+//不同大小按钮的 padding 和 font size
+$btn-padding-sm: 0rem 0.5rem;
+$btn-padding: 0rem 0.75rem;
+$btn-padding-lg: 0rem 1rem;
+
+$btn-font-size-sm: $font-size-sm;
+$btn-font-size: $font-size-base;
+$btn-font-size-lg: $font-size-lg;
+
+$btn-height: 2.75rem;
+$btn-height-sm: calc($btn-height*0.5);
+$btn-height-lg: calc($btn-height*1.14);
+
+$btn-width-sm: 5rem;
+$btn-width: 100%;
+$btn-width-lg: $btn-width;
 
 // 链接按钮
 $btn-link-color: $link-color;
@@ -42,82 +39,101 @@ $btn-border-radius: $border-radius;
 $btn-border-radius-lg: $border-radius-lg;
 $btn-border-radius-sm: $border-radius-sm;
 
+
 $btn-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
   border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 
 
+:root {
+
+  --xn-btn-font-weight: $btn-font-weight;
+  --xn-btn-line-height: $btn-line-height;
+  --xn-btn-border-width: $btn-border-width;
+
+  --xn-btn-padding: var($btn-padding);
+  --xn-btn-padding-sm: var($btn-padding-sm);
+  --xn-btn-padding-lg: var($btn-padding-lg);
+
+  --xn-btn-default-color: var($white);
+  --xn-btn-default-border-color: var($slate);
+  --xn-btn-default-bg-color: var($slate);
+
+}
+
 .#{$sp-prefix}-btn {
   position: relative;
   display: inline-block;
-  width: 100%;
-  color: $body-color;
   font-weight: $btn-font-weight;
   line-height: $btn-line-height;
   white-space: nowrap;
   text-align: center;
   vertical-align: middle;
-  background-image: none;
   border: $btn-border-width solid transparent;
   border-radius: $border-radius;
   outline: none;
   box-shadow: $btn-box-shadow;
   cursor: pointer;
   transition: $btn-transition;
-  @include button-size($btn-padding-x, $btn-padding-y, $btn-font-size, $btn-height, $btn-width);
+  padding: $btn-padding;
+  font-size: $btn-font-size;
+  height: $btn-height;
+  line-height: $btn-line-height;
 
-  &-content {
+  &::before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $black;
+    opacity: 0;
+    content: '';
+    box-sizing: content-box;
+  }
+
+  &:active::before {
+    opacity: .1;
+  }
+
+  &__content {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
   }
 
-  &-icon {
+  &--icon {
     margin-right: $btn-base-padding;
   }
-  &-lg {
-    @include button-size($btn-padding-x-lg, $btn-padding-y-lg, $btn-font-size-lg, $btn-height-lg, $btn-width-lg);
+
+  &--lg {
+    @include button-size($btn-padding-lg, $btn-font-size-lg, $btn-height-lg, $btn-width-lg);
   }
-  &-sm {
-    @include button-size($btn-padding-x-sm, $btn-padding-y-sm, $btn-font-size-sm, $btn-height-sm, $btn-width-sm);
+  &--sm {
+    @include button-size($btn-padding-sm, $btn-font-size-sm, $btn-height-sm, $btn-width-sm);
   }
 
-  &-default {
+  &--default {
     @include button-style($slate, $slate, $white);
-    // & ${$sp-prefix}-btn-outline {
-    //   @include button-style($transparent, $slate, $slate);
-    // }
   }
 
-  &-primary {
+  &--primary {
     @include button-style($primary, $primary, $white);
-    // &.${sp-prefix}-btn-outline {
-    //   @include button-style($transparent, $primary, $primary);
-    // }
   }
 
-  &-warning {
+  &--warning {
     @include button-style($warning, $warning, $white);
-    // &.${sp-prefix}-btn-outline {
-    //   @include button-style($transparent, $warning, $warning);
-    // }
   }
 
-  &-info {
+  &--info {
     @include button-style($info, $info, $white);
-    // &.${sp-prefix}-btn-outline {
-    //   @include button-style($transparent, $info, $info);
-    // }
   }
 
-  &-danger {
+  &--danger {
     @include button-style($danger, $danger, $white);
-    // &.${sp-prefix}-btn-outline {
-    //   @include button-style($transparent, $danger, $danger);
-    // }
   }
 
-  &-link {
+  &--link {
     color: $link-color;
     background-color: transparent;
     box-shadow: none;
@@ -125,25 +141,29 @@ $btn-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
       text-decoration: none;
     }
   }
-  &-text {
+
+  &--text {
     background-color: transparent;
     box-shadow: none;
     &:hover {
       background-color: $gray-100;
     }
-    // &.${sp-prefix}-btn-outline {
-    //   @include button-style($transparent, $gray-100, $gray-100);
-    // }
   }
-  &-disabled {
+
+  &--disabled {
     cursor: not-allowed;
     opacity: $btn-disabled-opacity;
   }
-  &-block {
-    display: block;
+
+  &--outline {
+    border: thin solid currentColor;
   }
 
-  &-shape {
+  &--block {
+    width: 100%;
+  }
+
+  &--shape {
     border-radius: 0;
   }
 }

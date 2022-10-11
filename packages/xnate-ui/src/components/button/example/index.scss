@@ -1,0 +1,15 @@
+
+.button-demo {
+  padding: 10px;
+
+  &-title {
+    font-size: 14px;
+  }
+  &-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+}

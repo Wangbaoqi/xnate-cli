@@ -1,7 +1,7 @@
-@mixin button-size($p-x, $p-y, $f-s, $b-h, $b-w) {
+@mixin button-size($p, $f-s, $b-h, $b-w) {
   width: $b-w;
   height: $b-h;
-  padding: $p-y $p-x;
+  padding: $p;
   font-size: $f-s;
 }
 
@@ -28,3 +28,5 @@
     border-color: $hover-border;
   }
 }
+
+

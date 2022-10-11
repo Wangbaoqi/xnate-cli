@@ -28,10 +28,16 @@ const AppMobile = () => {
     return () => window.removeEventListener('message', handler);
   }, []);
 
+  const today = new Date();
   return (
-    <div className="xnate-site-mobile">
+    <div className="xnate-site-mobile" data-device-type="iOS">
+      <div className="xnate-site-mobile__status">
+        <span>{`${today.getHours()}:${today.getMinutes()}`}</span>
+        <span>mobile</span>
+        <span className="xnate-site-mobile__batter"></span>
+      </div>
       <div className="xnate-site-mobile__content">
-        <iframe id="mobile" src={`http://localhost:8080/mobile.html#/${componentsName}?language=${language}`}></iframe>
+        <iframe id="mobile" src={`/mobile.html#/${componentsName}?language=${language}`}></iframe>
       </div>
     </div>
   );

@@ -1,19 +1,74 @@
 
+@mixin gen-device-style($scale) {
+  width: $device-width * $scale;
+  min-width: $device-width * $scale;
+  height: $device-width * $scale * $device-ratio;
+  box-shadow: 0 0 0 $device-border-width * $scale #090a0d,
+    0 0 0 $device-shell-width * $scale #9fa3a8,
+    0 4px 20px $device-shell-width * $scale rgba(0, 0, 0, 0.1);
+}
+
+
+$device-gap-top: 36px;
+$device-border-width: 14px;
+$device-shell-width: $device-border-width + 2px;
+$device-width: 320px;
+$device-ratio: calc(19.5/9);
+
+
+
 .xnate-site {
 
   &-mobile {
     position: sticky;
-    padding: 20px;
-    top: 60px;
-    margin-right: 20px;
-
-    &__content {
-      height: 600px;
+    top: 80px;
+    margin: 0 50px;
+    &[data-device-type='iOS'] {
+      display: flex;
+      flex-direction: column;
       width: 325px;
       min-width: 325px;
-      background: var(--site-secondary-bg);
+      height: 600px;
+      overflow: hidden;
+      border-radius: 32px;
+      @include gen-device-style(1);
+  
+      @media only screen and (max-width: 1440px) {
+        @include gen-device-style(0.9);
+      }
+  
+      @media only screen and (max-width: 1360px) {
+        @include gen-device-style(0.8);
+      }
+  
+      @media only screen and (max-width: 960px) {
+        display: none;
+      }
+    }
+
+    &__status {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 32px;
+      padding: 0 20px;
+      font-size: 12px;
+      user-select: none;
+    }
+    &__batter {
+      display: inline-block;
+      width: 14px;
+      height: 5px;
+      margin-left: 42px;
+      background: #50d664;
+      border-radius: 1px;
+      box-shadow: 0 0 0 1px #fff, 0 0 0 2px #999;
+    }
+    &__content {
+      height: 100%;
+      width: 325px;
+      min-width: 325px;
       color: var(--site-text-color);
-      border-radius: 14px;
     }
   }
   

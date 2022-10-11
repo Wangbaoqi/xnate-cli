@@ -28,12 +28,12 @@ const Button: React.FC<ButtonProps> = (props) => {
   const disabled = useMemo(() => props.disabled ?? false, [props.disabled])
 
   const cls = clsx(className, 'xn-btn', {
-    [`sp-btn-${type}`]: type,
-    [`sp-btn-${size}`]: size,
-    'sp-btn-disabled': disabled,
-    'sp-btn-outline': is_outline,
-    'sp-btn-block': is_block,
-    'sp-btn-shape': is_shape,
+    [`xn-btn--${type}`]: type,
+    [`xn-btn--${size}`]: size,
+    'xn-btn--disabled': disabled,
+    'xn-btn--outline': is_outline,
+    'xn-btn--block': is_block,
+    'xn-btn--shape': is_shape,
   })
 
   const iconBox = () => {
@@ -59,7 +59,7 @@ const Button: React.FC<ButtonProps> = (props) => {
       )
     }
     return (
-      <div className="xn-btn-content">
+      <div className="xn-btn__content">
         {iconBox()}
         {textBox()}
       </div>
