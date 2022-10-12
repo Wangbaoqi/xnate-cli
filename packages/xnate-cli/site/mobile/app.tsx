@@ -36,7 +36,7 @@ function App() {
 
   return (
     <div className="xnate-site-app">
-      <Header />
+      <Header>{'d'}</Header>
       <main className="xnate-site-app__container">
         <RouteView />
       </main>

@@ -42,7 +42,7 @@ function MobileHome() {
     });
 
     if (!isPhone() && inIframe()) {
-      window.top?.postMessage({ path, language });
+      window.parent?.postMessage({ path, language });
     }
   };
 
