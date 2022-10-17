@@ -16,12 +16,11 @@ const AppMobile = () => {
   const componentsName = navName === 'components' ? secondName : 'home'
 
   useEffect(() => {
-    const handler = (event) => {
+    const handler = (event: { data: { language: string; path: string } }) => {
       const { language: curLanguage, path } = event.data
       if (curLanguage && path) {
         console.log(`/${curLanguage}/components/${path}`, 'envet')
         navigate(`/${language}/components/${path}`)
-        // navigate(`/${language}/home`);
       }
     }
     window.addEventListener('message', handler)

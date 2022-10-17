@@ -14,13 +14,14 @@ const Layout = (props: ILayout) => {
   const params = useParams();
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { language = '', navName = '' } = getPCLocationInfo();
+  const { language = '', navName = '', secondName } = getPCLocationInfo();
   const {
     pc: { navs = [], menu = {}, redirect = '' },
     mobile: { redirect: mobileRedirect = '' },
     defaultLanguage = '',
   } = config;
   const isHome = navName === 'home';
+  const componentsName = navName === 'components' ? secondName : 'home';
 
   const menuList = menu[navName] || [];
 
@@ -36,11 +37,15 @@ const Layout = (props: ILayout) => {
     <div className="xnate-site">
       <AppHeader language={language} navList={navs} navName={navName} />
       {isHome ? (
-        <>{props.children}</>
+        <Outlet />
       ) : (
         <>
           <AppSideBar language={language} navName={navName} menu={menuList} />
-          <div className="xnate-site-container">{props.children}</div>
+          <div className="xnate-site-container">
+            <Outlet />
+            {/* <AppMobile /> */}
+            {/* <iframe id="mobile" src={`/mobile.html#/${componentsName}?language=${language}`}></iframe> */}
+          </div>
         </>
       )}
     </div>
