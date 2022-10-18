@@ -1,6 +1,4 @@
-import React from 'react';
-
-import MdContent from './mdContent';
+import React, { useMemo } from 'react';
 
 export interface ITocItem {
   depth?: number;
@@ -12,13 +10,34 @@ export interface IMdContent {
   toc?: ITocItem[];
 }
 
-const RouteComponent = ({ lazyComponent, ...rest }) => {
-  const LazyComponent = React.lazy(lazyComponent);
+import { getMDXExport } from 'mdx-bundler/client';
+import { CodeExample, TableContent } from './components';
+import { AppMobile } from '..';
+
+import './index.scss';
+
+const MdContent = ({ mdContainer = '', toc = [], ...rest }: IMdContent) => {
+  const components = {
+    // a: (props) => <PostLink {...props} />,
+    pre: (props: any) => <CodeExample {...props} />,
+    table: (props: React.TableHTMLAttributes<HTMLTableElement>) => (
+      <table className="xnate-site-md__table font-source-code" {...props} />
+    ),
+  };
+
+  const mdxExport = getMDXExport(mdContainer);
+  const MDXLayout = useMemo(() => mdxExport.default, [mdContainer]);
   return (
-    <React.Suspense fallback={<>...</>}>
-      <LazyComponent>{(props: IMdContent) => <MdContent {...props} />}</LazyComponent>
-    </React.Suspense>
+    <div className="xnate-site-content">
+      <article className="xnate-site-md">
+        <section className="xnate-site-md__box">
+          <MDXLayout components={components} />
+        </section>
+      </article>
+      <AppMobile />
+      <TableContent toc={toc} />
+    </div>
   );
 };
 
-export default RouteComponent;
+export default MdContent;

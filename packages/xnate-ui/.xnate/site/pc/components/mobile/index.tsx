@@ -31,7 +31,7 @@ const AppMobile = () => {
   return (
     <div className="xnate-site-mobile" data-device-type="iOS">
       <div className="xnate-site-mobile__status">
-        <span>{`${today.getHours()}:${today.getMinutes()}`}</span>
+        {/* <span>{`${today.getHours()}:${today.getMinutes()}`}</span> */}
         <span>mobile</span>
         <span className="xnate-site-mobile__batter"></span>
       </div>
@@ -42,4 +42,4 @@ const AppMobile = () => {
   )
 }
 
-export default AppMobile
+export default React.memo(AppMobile)

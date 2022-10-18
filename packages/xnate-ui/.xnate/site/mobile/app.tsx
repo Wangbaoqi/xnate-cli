@@ -20,8 +20,6 @@ function App() {
     mobile: { redirect = '' },
   } = config
 
-  console.log('render mobile app')
-
   const updateHTMLTag = (val: string) => {
     const html = document.querySelector('html')
     html?.setAttribute('data-theme', val)
